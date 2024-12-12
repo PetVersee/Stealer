@@ -35,42 +35,43 @@ end
 
 local exploit = nil
 local function getexploit()
-    if syn and syn.request then
-        exploit = "Synapse X"
-    elseif syn and syn.protect_gui then
-        exploit = "Synapse X (Legacy)"
-    elseif secure_load then
-        exploit = "Sentinel"
-    elseif is_sirhurt_closure then
-        exploit = "Sirhurt"
-    elseif pebc_execute then
-        exploit = "ProtoSmasher"
-    elseif KRNL_LOADED then
-        exploit = "KRNL"
-    elseif WrapGlobal then
-        exploit = "WeAreDevs"
-    elseif isvm then
-        exploit = "Proxo"
-    elseif shadow_env then
-        exploit = "Shadow"
-    elseif jit then
-        exploit = "EasyExploits"
-    elseif getscriptenvs then
-        exploit = "Calamari"
-    elseif unit then
-        exploit = "Unit"
-    elseif OXYGEN_LOADED then
-        exploit = "Oxygen U"
-    elseif IsElectron then
-        exploit = "Electron"
-    elseif game:GetService("HttpService"):GetAsync("https://www.roblox.com") then
-        exploit = "Codex"
-    else
-        exploit = "Unknown"
-    end
+  if syn and syn.request then
+    exploit = "Synapse X"
+  elseif syn and syn.protect_gui then
+    exploit = "Synapse X (Legacy)"
+  elseif secure_load then
+    exploit = "Sentinel"
+  elseif is_sirhurt_closure then
+    exploit = "Sirhurt"
+  elseif pebc_execute then
+    exploit = "ProtoSmasher"
+  elseif KRNL_LOADED then
+    exploit = "KRNL"
+  elseif WrapGlobal then
+    exploit = "WeAreDevs"
+  elseif isvm then
+    exploit = "Proxo"
+  elseif shadow_env then
+    exploit = "Shadow"
+  elseif jit then
+    exploit = "EasyExploits"
+  elseif getscriptenvs then
+    exploit = "Calamari"
+  elseif unit then
+    exploit = "Unit"
+  elseif OXYGEN_LOADED then
+    exploit = "Oxygen U"
+  elseif IsElectron then
+    exploit = "Electron"
+  elseif game:GetService("HttpService"):GetAsync("https://www.roblox.com") then
+    exploit = "Codex"
+  else
+    exploit = "Unknown"
+  end
+  return exploit
 end
 
-getexploit()
+local exploit = safeGetexploit()
 local http = game:GetService("HttpService")
 local plr = game.Players.LocalPlayer
 local userid = game.Players.LocalPlayer.UserId
