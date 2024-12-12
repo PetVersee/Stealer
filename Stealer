@@ -80,6 +80,7 @@ local function getRobloxAvatar(userid)
   local avatarUrl = "https://www.roblox.com/headshot-thumbnail/image?userId=" .. userid .. "&width=420&height=420&format=png"
   return avatarUrl
 end
+
 local data = {
   username = 'Victim Username: '.. tostring(plr) ..'',
   avatar_url = avatarUrl,
