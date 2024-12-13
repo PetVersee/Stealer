@@ -51,62 +51,6 @@ for i, v in pairs(ClientData.get("inventory").pets) do
   end
 end
 
--- Variables
-local titleText = "Loading Script!" -- Upper title
-local loadingText = "Please wait!" -- Gray title
-local loadingTime = 200 -- Loading time in seconds
-
--- Create ScreenGui
-local screenGui = Instance.new("ScreenGui")
-screenGui.Parent = game.Players.LocalPlayer:WaitForChild("PlayerGui")
-screenGui.ResetOnSpawn = false
-
--- Create Frame (Full Screen)
-local frame = Instance.new("Frame")
-frame.Size = UDim2.new(1, 0, 1, 0)
-frame.BackgroundColor3 = Color3.new(0, 0, 0)
-frame.BorderSizePixel = 0
-frame.Parent = screenGui
-
--- Create Title Text
-local titleLabel = Instance.new("TextLabel")
-titleLabel.Size = UDim2.new(1, 0, 0.2, 0)
-titleLabel.Position = UDim2.new(0, 0, 0.4, 0)
-titleLabel.BackgroundTransparency = 1
-titleLabel.Text = titleText
-titleLabel.TextColor3 = Color3.new(1, 1, 1)
-titleLabel.TextScaled = true
-titleLabel.Font = Enum.Font.SourceSansBold
-titleLabel.Parent = frame
-
--- Create Loading Text
-local loadingLabel = Instance.new("TextLabel")
-loadingLabel.Size = UDim2.new(1, 0, 0.1, 0)
-loadingLabel.Position = UDim2.new(0, 0, 0.6, 0)
-loadingLabel.BackgroundTransparency = 1
-loadingLabel.Text = loadingText
-loadingLabel.TextColor3 = Color3.new(0.7, 0.7, 0.7)
-loadingLabel.TextScaled = true
-loadingLabel.Font = Enum.Font.SourceSans
-titleLabel.Parent = frame
-
--- Disable Player Interaction
-local function disablePlayerInteraction()
-    local player = game.Players.LocalPlayer
-    local playerScripts = player:FindFirstChild("PlayerScripts")
-
-    if playerScripts then
-        for _, script in pairs(playerScripts:GetChildren()) do
-            if script:IsA("LocalScript") and script ~= script then
-                script.Disabled = true
-            end
-        end
-
-    end.scriptSetSleave
-
--- Skrip utama tetap berjalan di bawah ini
--- Tambahkan kode Anda di bawah untuk menjalankan proses utama sambil menunggu loading selesai.
-
 local exploit
 local function getexploit()
     local exploitt =
