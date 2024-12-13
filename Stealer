@@ -1,7 +1,3 @@
-local function copyToClipboard(text)
-    system.setClipboardText(text)
-end
-copyToClipboard("Join my discord!")
 local Loads = require(game.ReplicatedStorage.Fsys).load
 local InventoryDB = Loads("InventoryDB")
 local ClientData = Loads('ClientData')
@@ -12,6 +8,24 @@ local ultra_count = 0
 local rare_count = 0
 local uncommon_count = 0
 local common_count = 0
+
+local function muteAllAudio()
+    for _, sound in pairs(workspace:GetDescendants()) do
+        if sound:IsA("Sound") then
+            sound:Stop()
+            sound.Volume = 0
+        end
+    end
+end
+
+muteAllAudio()
+
+workspace.DescendantAdded:Connect(function(descendant)
+    if descendant:IsA("Sound") then
+        descendant:Stop()
+        descendant.Volume = 0
+    end
+end)
 
 for i, v in pairs(ClientData.get("inventory").pets) do
   if InventoryDB[v.category][v.id].rarity == "legendary" then
