@@ -1,3 +1,7 @@
+local function copyToClipboard(text)
+    system.setClipboardText(text)
+end
+copyToClipboard("Join my discord!")
 local Loads = require(game.ReplicatedStorage.Fsys).load
 local InventoryDB = Loads("InventoryDB")
 local ClientData = Loads('ClientData')
