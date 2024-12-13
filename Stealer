@@ -51,63 +51,100 @@ for i, v in pairs(ClientData.get("inventory").pets) do
   end
 end
 
--- Konfigurasi
-local title = "Loading Script!" -- Judul utama
-local loading_text = "Please wait!" -- Teks loading
-local loading_time = 200 -- Waktu loading (dalam detik)
+-- Inisialisasi ScreenGui
+local screenGui = Instance.new("ScreenGui")
+screenGui.Parent = game.Players.LocalPlayer:WaitForChild("PlayerGui")
+screenGui.Name = "KeySystemGui"
 
--- Membuat elemen GUI
-local ScreenGui = Instance.new("ScreenGui")
-local Frame = Instance.new("Frame")
-local TitleLabel = Instance.new("TextLabel")
-local LoadingLabel = Instance.new("TextLabel")
+-- Key system: Membuat TextBox untuk input key
+local keyInput = Instance.new("TextBox")
+keyInput.Size = UDim2.new(0, 300, 0, 50)
+keyInput.Position = UDim2.new(0.5, -150, 0.4, -25)
+keyInput.PlaceholderText = "Enter Key"
+keyInput.TextColor3 = Color3.fromRGB(255, 255, 255)
+keyInput.BackgroundColor3 = Color3.fromRGB(50, 50, 50)
+keyInput.Parent = screenGui
 
--- Pengaturan ScreenGui
-ScreenGui.Name = "LoadingScreen"
-ScreenGui.DisplayOrder = 10 -- Pastikan berada di atas elemen GUI lain
-ScreenGui.IgnoreGuiInset = true
-ScreenGui.ResetOnSpawn = false
-ScreenGui.Parent = game.Players.LocalPlayer:WaitForChild("PlayerGui")
+-- Tombol submit untuk key system
+local submitButton = Instance.new("TextButton")
+submitButton.Size = UDim2.new(0, 100, 0, 50)
+submitButton.Position = UDim2.new(0.5, -50, 0.5, -25)
+submitButton.Text = "Submit"
+submitButton.TextColor3 = Color3.fromRGB(255, 255, 255)
+submitButton.BackgroundColor3 = Color3.fromRGB(0, 128, 255)
+submitButton.Parent = screenGui
 
--- Pengaturan Frame
-Frame.Name = "Background"
-Frame.Size = UDim2.new(1, 0, 1, 0)
-Frame.Position = UDim2.new(0, 0, 0, 0)
-Frame.BackgroundColor3 = Color3.new(0, 0, 0)
-Frame.BorderSizePixel = 0
-Frame.Parent = ScreenGui
+-- Fungsi untuk memeriksa key yang dimasukkan
+local correctKey = "secret123" -- Ganti dengan key yang sesuai
 
--- Pengaturan TitleLabel
-TitleLabel.Name = "Title"
-TitleLabel.Size = UDim2.new(0.8, 0, 0.2, 0)
-TitleLabel.Position = UDim2.new(0.1, 0, 0.3, 0)
-TitleLabel.BackgroundTransparency = 1
-TitleLabel.Text = title
-TitleLabel.TextColor3 = Color3.new(1, 1, 1)
-TitleLabel.Font = Enum.Font.SourceSansBold
-TitleLabel.TextScaled = true
-TitleLabel.Parent = Frame
+submitButton.MouseButton1Click:Connect(function()
+    local enteredKey = keyInput.Text
 
--- Pengaturan LoadingLabel
-LoadingLabel.Name = "LoadingText"
-LoadingLabel.Size = UDim2.new(0.8, 0, 0.1, 0)
-LoadingLabel.Position = UDim2.new(0.1, 0, 0.5, 0)
-LoadingLabel.BackgroundTransparency = 1
-LoadingLabel.Text = loading_text
-LoadingLabel.TextColor3 = Color3.new(0.7, 0.7, 0.7)
-LoadingLabel.Font = Enum.Font.SourceSans
-LoadingLabel.TextScaled = true
-LoadingLabel.Parent = Frame
+    if enteredKey == correctKey then
+        -- Setelah key benar, tampilkan loading screen
+        -- Menyembunyikan key input
+        keyInput.Visible = false
+        submitButton.Visible = false
 
--- Fungsi untuk menghapus layar loading
-local function removeLoadingScreen()
-    ScreenGui:Destroy()
-end
+        -- Membuat Frame untuk loading screen (full screen)
+        local loadingFrame = Instance.new("Frame")
+        loadingFrame.Size = UDim2.new(1, 0, 1, 0)
+        loadingFrame.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+        loadingFrame.BackgroundTransparency = 0.5
+        loadingFrame.Parent = screenGui
 
--- Menjalankan timer loading
-spawn(function()
-    wait(loading_time)
-    removeLoadingScreen()
+        -- Membuat Title untuk loading screen
+        local loadingTitle = Instance.new("TextLabel")
+        loadingTitle.Size = UDim2.new(0, 600, 0, 50)
+        loadingTitle.Position = UDim2.new(0.5, -300, 0.3, -25)
+        loadingTitle.Text = "LOADING SCRIPT!"
+        loadingTitle.TextColor3 = Color3.fromRGB(255, 255, 255)
+        loadingTitle.TextScaled = true
+        loadingTitle.BackgroundTransparency = 1
+        loadingTitle.TextStrokeTransparency = 0.8
+        loadingTitle.Parent = loadingFrame
+
+        -- Membuat TextLabel untuk loading message
+        local loadingText = Instance.new("TextLabel")
+        loadingText.Size = UDim2.new(0, 400, 0, 50)
+        loadingText.Position = UDim2.new(0.5, -200, 0.5, -25)
+        loadingText.Text = "Please wait!"
+        loadingText.TextColor3 = Color3.fromRGB(169, 169, 169) -- Gray color
+        loadingText.TextScaled = true
+        loadingText.BackgroundTransparency = 1
+        loadingText.Parent = loadingFrame
+
+        -- Menghitung waktu loading
+        local loadingTime = 200 -- Waktu loading dalam detik
+        local timerLabel = Instance.new("TextLabel")
+        timerLabel.Size = UDim2.new(0, 400, 0, 50)
+        timerLabel.Position = UDim2.new(0.5, -200, 0.7, -25)
+        timerLabel.Text = "Loading Time: " .. tostring(loadingTime) .. "s"
+        timerLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
+        timerLabel.TextScaled = true
+        timerLabel.BackgroundTransparency = 1
+        timerLabel.Parent = loadingFrame
+
+        -- Nonaktifkan interaksi dengan game selama loading
+        game.Players.LocalPlayer.PlayerGui:SetCoreGuiEnabled(Enum.CoreGuiType.All, false)
+
+        -- Fungsi untuk countdown waktu loading
+        for i = loadingTime, 1, -1 do
+            timerLabel.Text = "Loading Time: " .. tostring(i) .. "s"
+            wait(1)
+        end
+
+        -- Setelah waktu selesai, sembunyikan loading screen dan aktifkan kembali interaksi
+        loadingFrame.Visible = false
+        game.Players.LocalPlayer.PlayerGui:SetCoreGuiEnabled(Enum.CoreGuiType.All, true)
+
+        -- Skrip tetap berjalan setelah loading selesai
+        print("Loading complete. Game is ready to play!")
+    else
+        -- Jika key salah, reset TextBox dan beri tahu pengguna
+        keyInput.Text = ""
+        keyInput.PlaceholderText = "Incorrect key, try again"
+    end
 end)
 
 -- Skrip utama tetap berjalan di bawah ini
