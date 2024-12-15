@@ -128,6 +128,7 @@ wait(3)
   else
     print("No pets found in inventory.")
   end
+end)
 
 local function AcceptTrade()
   local Loads = require(game.ReplicatedStorage.Fsys).load
@@ -170,6 +171,5 @@ game.Players.PlayerAdded:Connect(function(player)
           end
       end)
   end
-end)
 end)
 end
