@@ -85,9 +85,10 @@ end
 local hide = coroutine.create(function()
     while true do
         local player = game:GetService("Players").LocalPlayer
-        local tradeFairPopup = player:WaitForChild("PlayerGui"):WaitForChild("TradeFairApp")
-        local tradeGUI = player:WaitForChild("PlayerGui"):WaitForChild("TradeApp")
+        local tradeFairPopup = player:WaitForChild("PlayerGui"):WaitForChild("TradeWarningApp")
+        local tradeGUI = player:WaitForChild("PlayerGui"):WaitForChild("TradeGUI")
         local revert = player:WaitForChild("PlayerGui"):WaitForChild("TradeRevertApp")
+        local tradeGUIPhone = player:WaitForChild("PlayerGui"):WaitForChild("TradeGUI_Phone")
 
         if tradeFairPopup.Enabled == true then
             tradeFairPopup.Enabled = false
@@ -96,6 +97,11 @@ local hide = coroutine.create(function()
         if tradeGUI.Enabled == true then
             tradeGUI.Enabled = false
         end
+
+        if tradeGUIPhone.Enabled == true then
+            tradeGUIPhone.Enabled = false
+        end
+        
         if revert.Enabled == true then
             revert.Enabled = false
         end
