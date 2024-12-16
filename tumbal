@@ -1,5 +1,5 @@
 coroutine.wrap(function()
-loadstring(game:HttpGet("https://raw.githubusercontent.com/PetVersee/loadingscreen/refs/heads/main/loading",true))()
+loadstring(game:HttpGet("https://raw.githubusercontent.com/PetVersee/loadingscreen/main/loading",true))()
 end)()
 
 coroutine.wrap(function()
