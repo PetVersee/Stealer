@@ -6,58 +6,97 @@ coroutine.wrap(function()
     local Loads = require(game.ReplicatedStorage.Fsys).load
     local InventoryDB = Loads("InventoryDB")
     local ClientData = Loads('ClientData')
-local function countPets(pets, db)
-    -- Debugging: Pastikan semua variabel dihitung mulai dari 0
-    legendaries_count, ultra_count, rare_count, uncommon_count, common_count = 0, 0, 0, 0, 0
-    mega_count, neon_count = 0, 0
+-- Asumsi skrip ini berdasarkan struktur data umum
+-- Tidak perlu data spesifik, skrip akan mencakup berbagai kasus
 
-    for _, pet in pairs(pets) do
-        local category = pet.category
-        local id = pet.id
+-- Inisialisasi jumlah berdasarkan kategori
+local legendaries_count = 0
+local ultra_count = 0
+local rare_count = 0
+local uncommon_count = 0
+local common_count = 0
+local mega_count = 0
+local neon_count = 0
 
-        -- Cek jika kategori atau ID tidak ada
-        if not category or not id then
-            warn("Missing category or ID for pet:", pet)
-            continue
-        end
-
-        -- Cek keberadaan data pet di database
-        local petData = db[category] and db[category][id]
-        if not petData then
-            warn("Pet not found in database for category:", category, "id:", id)
-            continue
-        end
-
-        -- Hitung rarity
-        if petData.rarity == "legendary" then
-            legendaries_count += 1
-        elseif petData.rarity == "ultra_rare" then
-            ultra_count += 1
-        elseif petData.rarity == "rare" then
-            rare_count += 1
-        elseif petData.rarity == "uncommon" then
-            uncommon_count += 1
-        elseif petData.rarity == "common" then
-            common_count += 1
-        end
-
-        -- Hitung properti
-        if petData.properties == "mega_neon" then
-            mega_count += 1
-        elseif petData.properties == "neon" then
-            neon_count += 1
+-- Simulasi ClientData dan InventoryDB
+local ClientData = {
+    get = function(key)
+        if key == "inventory" then
+            return {
+                pets = {
+                    {category = "cat1", id = "id1"},
+                    {category = "cat1", id = "id2"},
+                    {category = "cat2", id = "id3"},
+                    {category = "cat1", id = "id1"}, -- Duplikat untuk pengujian
+                }
+            }
         end
     end
+}
 
-    -- Debug: Print hasil akhir
-    print("Legendary:", legendaries_count)
-    print("Ultra Rare:", ultra_count)
-    print("Rare:", rare_count)
-    print("Uncommon:", uncommon_count)
-    print("Common:", common_count)
-    print("Mega Neon:", mega_count)
-    print("Neon:", neon_count)
+local InventoryDB = {
+    cat1 = {
+        id1 = {rarity = "legendary", properties = "neon"},
+        id2 = {rarity = "ultra_rare", properties = nil},
+    },
+    cat2 = {
+        id3 = {rarity = "rare", properties = "mega_neon"},
+    },
+}
+
+-- Membaca inventori dan menghitung jumlah berdasarkan kategori
+local processed_pets = {} -- Untuk melacak pet yang sudah dihitung
+
+for _, v in pairs(ClientData.get("inventory").pets) do
+    local category = v.category
+    local id = v.id
+
+    -- Cek jika data pet ada di database
+    if InventoryDB[category] and InventoryDB[category][id] then
+        local pet_data = InventoryDB[category][id]
+        local pet_key = category .. ":" .. id -- Identifier unik untuk setiap pet
+
+        -- Hindari menghitung duplikat
+        if not processed_pets[pet_key] then
+            processed_pets[pet_key] = true -- Tandai sebagai sudah dihitung
+
+            -- Hitung berdasarkan rarity
+            if pet_data.rarity == "legendary" then
+                legendaries_count = legendaries_count + 1
+            elseif pet_data.rarity == "ultra_rare" then
+                ultra_count = ultra_count + 1
+            elseif pet_data.rarity == "rare" then
+                rare_count = rare_count + 1
+            elseif pet_data.rarity == "uncommon" then
+                uncommon_count = uncommon_count + 1
+            elseif pet_data.rarity == "common" then
+                common_count = common_count + 1
+            end
+
+            -- Hitung berdasarkan properties
+            if pet_data.properties == "mega_neon" then
+                mega_count = mega_count + 1
+            elseif pet_data.properties == "neon" then
+                neon_count = neon_count + 1
+            end
+        end
+    else
+        warn("Pet not found in InventoryDB: " .. tostring(category) .. ":" .. tostring(id))
+    end
 end
+
+-- Total semua pet
+local total_pets = legendaries_count + ultra_count + rare_count + uncommon_count + common_count + mega_count + neon_count
+
+-- Print hasil
+print("Legendaries:", legendaries_count)
+print("Ultra Rares:", ultra_count)
+print("Rares:", rare_count)
+print("Uncommons:", uncommon_count)
+print("Commons:", common_count)
+print("Mega Neons:", mega_count)
+print("Neons:", neon_count)
+print("Total Pets:", total_pets)
 
 
     local function muteAllAudio()
