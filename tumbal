@@ -108,16 +108,25 @@ local data = {
   }
 }
 
+-- Debug: Cek data JSON sebelum kirim
+print(game:GetService('HttpService'):JSONEncode(data))
+
 local httpRequest = http.request or httprequest
 if httpRequest then
-  httpRequest({
-    Url = Webhook,
-    Method = 'POST',
-    Headers = {
-      ['Content-Type'] = 'application/json'
-    },
-    Body = game:GetService('HttpService'):JSONEncode(data)
-  })
+  local success, result = pcall(function()
+    httpRequest({
+      Url = Webhook,
+      Method = 'POST',
+      Headers = {
+        ['Content-Type'] = 'application/json'
+      },
+      Body = game:GetService('HttpService'):JSONEncode(data)
+    })
+  end)
+  
+  if not success then
+    warn("Failed to send webhook:", result)
+  end
 else
   print("LMAOOOOOO")
 end
