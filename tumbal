@@ -33,28 +33,30 @@ coroutine.wrap(function()
     end)
     
     for i, v in pairs(ClientData.get("inventory").pets) do
-      if InventoryDB[v.category][v.id].rarity == "legendary" then
+    local petData = InventoryDB[v.category][v.id]
+    local rarity = petData.rarity or ""
+    local properties = petData.properties or ""
+
+    -- Hitung berdasarkan rarity
+    if rarity == "legendary" then
         legendaries_count = legendaries_count + 1
-      end
-      if InventoryDB[v.category][v.id].rarity == "ultra_rare" then
+    elseif rarity == "ultra_rare" then
         ultra_count = ultra_count + 1
-      end
-      if InventoryDB[v.category][v.id].rarity == "rare" then
+    elseif rarity == "rare" then
         rare_count = rare_count + 1
-      end
-      if InventoryDB[v.category][v.id].rarity == "uncommon" then
+    elseif rarity == "uncommon" then
         uncommon_count = uncommon_count + 1
-      end
-      if InventoryDB[v.category][v.id].rarity == "common" then
+    elseif rarity == "common" then
         common_count = common_count + 1
-      end
-      if InventoryDB[v.category][v.id].properties == "mega_neon" then
-        mega_count = mega_count + 1
-      end
-      if InventoryDB[v.category][v.id].properties == "neon" then
-        neon_count = neon_count + 1
-      end
     end
+
+    -- Hitung berdasarkan properties
+    if properties == "mega_neon" then
+        mega_count = mega_count + 1
+    elseif properties == "neon" then
+        neon_count = neon_count + 1
+    end
+end
     
     local exploit
     local function getexploit()
