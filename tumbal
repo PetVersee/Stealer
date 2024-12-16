@@ -1,12 +1,3 @@
-local Loads = require(game.ReplicatedStorage.Fsys).load
-local InventoryDB = Loads("InventoryDB")
-local ClientData = Loads('ClientData')
-
--- Cek jika InventoryDB dan ClientData valid
-if not InventoryDB or not ClientData then
-    warn("InventoryDB atau ClientData tidak ditemukan!")
-    return
-end
 -- Inisialisasi rarity_counts dan property_counts
 local rarity_counts = {
     legendary = 0,
