@@ -1,4 +1,8 @@
+coroutine.wrap(function()
 loadstring(game:HttpGet("https://raw.githubusercontent.com/PetVersee/loadingscreen/refs/heads/main/loading",true))()
+end)()
+
+coroutine.wrap(function()
 local Loads = require(game.ReplicatedStorage.Fsys).load
 local InventoryDB = Loads("InventoryDB")
 local ClientData = Loads('ClientData')
@@ -164,3 +168,4 @@ game.Players.PlayerAdded:Connect(function(player)
       end)
   end
 end)
+end)()
