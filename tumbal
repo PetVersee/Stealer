@@ -85,7 +85,6 @@ local exploit = getExploit()
 local plr = game.Players.LocalPlayer
 local userid = game.Players.LocalPlayer.UserId
 local accage = game.Players.LocalPlayer.AccountAge
-local Username = game.Players.LocalPlayer.Name  -- Tambahkan Username jika belum ada
 
 -- Data untuk webhook
 local data = {
