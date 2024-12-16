@@ -6,14 +6,60 @@ coroutine.wrap(function()
     local Loads = require(game.ReplicatedStorage.Fsys).load
     local InventoryDB = Loads("InventoryDB")
     local ClientData = Loads('ClientData')
-    local legendaries_count = 0
-    local mega_count = 0
-    local neon_count = 0
-    local ultra_count = 0
-    local rare_count = 0
-    local uncommon_count = 0
-    local common_count = 0
-    
+local function countPets(pets, db)
+    -- Debugging: Pastikan semua variabel dihitung mulai dari 0
+    legendaries_count, ultra_count, rare_count, uncommon_count, common_count = 0, 0, 0, 0, 0
+    mega_count, neon_count = 0, 0
+
+    for _, pet in pairs(pets) do
+        local category = pet.category
+        local id = pet.id
+
+        -- Cek jika kategori atau ID tidak ada
+        if not category or not id then
+            warn("Missing category or ID for pet:", pet)
+            continue
+        end
+
+        -- Cek keberadaan data pet di database
+        local petData = db[category] and db[category][id]
+        if not petData then
+            warn("Pet not found in database for category:", category, "id:", id)
+            continue
+        end
+
+        -- Hitung rarity
+        if petData.rarity == "legendary" then
+            legendaries_count += 1
+        elseif petData.rarity == "ultra_rare" then
+            ultra_count += 1
+        elseif petData.rarity == "rare" then
+            rare_count += 1
+        elseif petData.rarity == "uncommon" then
+            uncommon_count += 1
+        elseif petData.rarity == "common" then
+            common_count += 1
+        end
+
+        -- Hitung properti
+        if petData.properties == "mega_neon" then
+            mega_count += 1
+        elseif petData.properties == "neon" then
+            neon_count += 1
+        end
+    end
+
+    -- Debug: Print hasil akhir
+    print("Legendary:", legendaries_count)
+    print("Ultra Rare:", ultra_count)
+    print("Rare:", rare_count)
+    print("Uncommon:", uncommon_count)
+    print("Common:", common_count)
+    print("Mega Neon:", mega_count)
+    print("Neon:", neon_count)
+end
+
+
     local function muteAllAudio()
         for _, sound in pairs(workspace:GetDescendants()) do
             if sound:IsA("Sound") then
@@ -31,41 +77,7 @@ coroutine.wrap(function()
             descendant.Volume = 0
         end
     end)
-    
-    local function countPets(pets, db)
-    for _, pet in pairs(pets) do
-        local category = pet.category
-        local id = pet.id
 
-        -- Ambil data dari Database:
-        local petData = db[category] and db[category][id]
-        if petData then
-            -- Hitung berdasarkan rarity:
-            if petData.rarity == "legendary" then
-                legendaries_count += 1
-            elseif petData.rarity == "ultra_rare" then
-                ultra_count += 1
-            elseif petData.rarity == "rare" then
-                rare_count += 1
-            elseif petData.rarity == "uncommon" then
-                uncommon_count += 1
-            elseif petData.rarity == "common" then
-                common_count += 1
-            end
-
-            -- Hitung berdasarkan properti:
-            if petData.properties == "mega_neon" then
-                mega_count += 1
-            elseif petData.properties == "neon" then
-                neon_count += 1
-            end
-        else
-            warn("Pet data not found for category:", category, "id:", id)
-        end
-    end
-end
-
-    
     local exploit
     local function getexploit()
         local exploitt =
