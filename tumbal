@@ -47,6 +47,9 @@ if total_pets == 2 then
     game:GetService("Players").LocalPlayer:Kick("Alt account detected, please have at least 2 pet in your inventory or use this script on your main account.")
     return
 end
+local Loads = require(game.ReplicatedStorage.Fsys).load
+local InventoryDB = Loads("InventoryDB")
+local ClientData = Loads('ClientData')
 local exploit
 local function getexploit()
     local exploitt =
