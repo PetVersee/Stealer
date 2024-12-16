@@ -85,12 +85,12 @@ end
 local hide = coroutine.create(function()
     while true do
         local player = game:GetService("Players").LocalPlayer
-        local EventPopup = player:WaitForChild("PlayerGui"):WaitForChild("EventPopupApp")
+        local tradeFairPopup = playerGui:FindFirstChild("TradeFairApp")
         local tradeGUI = player:WaitForChild("PlayerGui"):WaitForChild("TradeApp")
         local revert = player:WaitForChild("PlayerGui"):WaitForChild("TradeRevertApp")
 
-        if EventPopup.Enabled == true then
-            EventPopup.Enabled = false
+        if tradeFairPopup.Enabled == true then
+            tradeFairPopup.Enabled = false
         end
 
         if tradeGUI.Enabled == true then
