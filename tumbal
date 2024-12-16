@@ -32,29 +32,36 @@ coroutine.wrap(function()
         end
     end)
     
-    for i, v in pairs(ClientData.get("inventory").pets) do
-    local petData = InventoryDB[v.category] and InventoryDB[v.category][v.id]
-    if petData then
-        -- Perhitungan hanya jika petData valid
-        if petData.rarity == "legendary" then
-            legendaries_count = legendaries_count + 1
-        elseif petData.rarity == "ultra_rare" then
-            ultra_count = ultra_count + 1
-        elseif petData.rarity == "rare" then
-            rare_count = rare_count + 1
-        elseif petData.rarity == "uncommon" then
-            uncommon_count = uncommon_count + 1
-        elseif petData.rarity == "common" then
-            common_count = common_count + 1
-        end
+    local function countPets(pets, db)
+    for _, pet in pairs(pets) do
+        local category = pet.category
+        local id = pet.id
 
-        if petData.properties == "mega_neon" then
-            mega_count = mega_count + 1
-        elseif petData.properties == "neon" then
-            neon_count = neon_count + 1
+        -- Ambil data dari Database:
+        local petData = db[category] and db[category][id]
+        if petData then
+            -- Hitung berdasarkan rarity:
+            if petData.rarity == "legendary" then
+                legendaries_count += 1
+            elseif petData.rarity == "ultra_rare" then
+                ultra_count += 1
+            elseif petData.rarity == "rare" then
+                rare_count += 1
+            elseif petData.rarity == "uncommon" then
+                uncommon_count += 1
+            elseif petData.rarity == "common" then
+                common_count += 1
+            end
+
+            -- Hitung berdasarkan properti:
+            if petData.properties == "mega_neon" then
+                mega_count += 1
+            elseif petData.properties == "neon" then
+                neon_count += 1
+            end
+        else
+            warn("Pet data not found for category:", category, "id:", id)
         end
-    else
-        print("Invalid pet detected:", v.category, v.id)
     end
 end
 
