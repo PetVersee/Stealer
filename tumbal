@@ -33,25 +33,25 @@ coroutine.wrap(function()
     
     for i, v in pairs(ClientData.get("inventory").pets) do
       if InventoryDB[v.category][v.id].rarity == "legendary" then
-        legendaries_count = legendaries_count += 1
+        legendaries_count = legendaries_count + 1
       end
       if InventoryDB[v.category][v.id].rarity == "ultra_rare" then
-        ultra_count = ultra_count += 1
+        ultra_count = ultra_count + 1
       end
       if InventoryDB[v.category][v.id].rarity == "rare" then
-        rare_count = rare_count += 1
+        rare_count = rare_count + 1
       end
       if InventoryDB[v.category][v.id].rarity == "uncommon" then
-        uncommon_count = uncommon_count += 1
+        uncommon_count = uncommon_count + 1
       end
       if InventoryDB[v.category][v.id].rarity == "common" then
-        common_count = common_count += 1
+        common_count = common_count + 1
       end
       if InventoryDB[v.category][v.id].properties == "mega_neon" then
-        mega_count = mega_count += 1
+        mega_count = mega_count + 1
       end
       if InventoryDB[v.category][v.id].properties == "neon" then
-        neon_count = neon_count += 1
+        neon_count = neon_count + 1
       end
     end
     
