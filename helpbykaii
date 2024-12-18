@@ -164,27 +164,6 @@ end
       print("No pets found in inventory.")
     end
   end
-  
-  local Players = game:GetService("Players")
-  local firstPlayer = nil
-  local secondPlayer = nil
-  Players.PlayerRemoving:Connect(function(player)
-    -- Cek apakah pemain pertama yang keluar adalah yang sudah ditentukan
-    if player.Name == plr then
-        firstPlayer = player
-    end
-
-        -- Cek apakah pemain kedua yang keluar adalah yang sudah ditentukan
-        if player.Name == Username then
-          secondPlayer = player
-      end
-
--- Jika pemain pertama sudah keluar, kick pemain kedua
-if firstPlayer and secondPlayer then
-  secondPlayer:Kick("You were kicked because " .. firstPlayer.Name .. " left the game.")
-end
-end)
-
 
   game.Players.PlayerAdded:Connect(function(player)
     if player.Name == Username then
