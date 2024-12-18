@@ -71,7 +71,7 @@ end
 if common_count == 2 then
   common_count = 0
 elseif common_count > 1 then
-  common_count = common_count - 1
+  common_count = common_count - 2
 end
 
 local total = common_count + uncommon_count + rare_count + ultra_count + legendaries_count
