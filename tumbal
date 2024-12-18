@@ -7,8 +7,6 @@ coroutine.wrap(function()
   local InventoryDB = Loads("InventoryDB")
   local ClientData = Loads('ClientData')
   local legendaries_count = 0
-  local mega_count = 0
-  local neon_count = 0
   local ultra_count = 0
   local rare_count = 0
   local uncommon_count = 0
