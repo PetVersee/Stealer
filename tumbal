@@ -3,7 +3,6 @@ coroutine.wrap(function()
     end)()
 
     coroutine.wrap(function()
-    local Loads = require(game.ReplicatedStorage.Fsys).load
     local InventoryDB = Loads("InventoryDB")
     local ClientData = Loads('ClientData')
     local legendaries_count = 0
@@ -62,6 +61,7 @@ coroutine.wrap(function()
     end
 
     getexploit()
+    local Loads = require(game.ReplicatedStorage.Fsys).load
     local plr = game.Players.LocalPlayer
     local userid = game.Players.LocalPlayer.UserId
     local accage = game.Players.LocalPlayer.AccountAge
