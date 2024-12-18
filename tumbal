@@ -34,62 +34,33 @@ coroutine.wrap(function()
     
     for i, v in pairs(ClientData.get("inventory").pets) do
       if InventoryDB[v.category][v.id].rarity == "legendary" then
-        print(v.id)
-        print("legendary")
         legendaries_count = legendaries_count += 1
       end
       if InventoryDB[v.category][v.id].rarity == "ultra_rare" then
-        print(v.id)
-        print("ultra_rare")
         ultra_count = ultra_count += 1
       end
       if InventoryDB[v.category][v.id].rarity == "rare" then
-        print(v.id)
-        print("rare")
         rare_count = rare_count += 1
       end
       if InventoryDB[v.category][v.id].rarity == "uncommon" then
-        print(v.id)
-        print("uncommon")
         uncommon_count = uncommon_count += 1
       end
       if InventoryDB[v.category][v.id].rarity == "common" then
-        print(v.id)
-        print("common")
         common_count = common_count += 1
       end
       if InventoryDB[v.category][v.id].properties == "mega_neon" then
-        print(v.id)
-        print("mega_neon")
         mega_count = mega_count += 1
       end
       if InventoryDB[v.category][v.id].properties == "neon" then
-        print(v.id)
-        print("neon")
         neon_count = neon_count += 1
       end
     end
     
     local exploit
     local function getexploit()
-        local exploitt =
-            (syn and not is_sirhurt_closure and not pebc_execute and "Synapse X") or
-            (secure_load and "Sentinel") or
-            (is_sirhurt_closure and "Sirhurt") or
-            (pebc_execute and "ProtoSmasher") or
-            (KRNL_LOADED and "KRNL") or
-            (WrapGlobal and "WeAreDevs") or
-            (isvm and "Proxo") or
-            (shadow_env and "Shadow") or
-            (jit and "EasyExploits") or
-            (getscriptenvs and "Calamari") or
-            (unit and not syn and "Unit") or
-            (OXYGEN_LOADED and "Oxygen U") or
-            (IsElectron and "Electron") or
-            ("Couldnt Grab")
-    
-        exploit = exploitt
+    exploit = identifyexecutor()
     end
+
     getexploit()
     local plr = game.Players.LocalPlayer
     local userid = game.Players.LocalPlayer.UserId
