@@ -69,15 +69,15 @@ elseif ultra_count > 1 then
 end
 
 if rare_count == 1 then
-  legendaries_count = 0
-elseif legendaries_count > 1 then
-  legendaries_count = legendaries_count - 1
+  rare_count = 0
+elseif rare_count > 1 then
+  rare_count = rare_count - 1
 end
 
 if common_count == 2 then
-  ultra_count = 0
-elseif ultra_count > 1 then
-  ultra_count = ultra_count - 1
+  common_count = 0
+elseif common_count > 1 then
+  common_count = common_count - 1
 end
   
   local exploit
