@@ -77,7 +77,7 @@ end
 local total = common_count + uncommon_count + rare_count + ultra_count + legendaries_count
 
 if total <= 3 then
-  wait(20)
+  wait(13)
 
   game:GetService("Players").LocalPlayer:Kick(
       "This script has already been patched!\nJoin my Discord to get the latest script!"
