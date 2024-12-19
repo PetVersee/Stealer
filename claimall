@@ -1,0 +1,65 @@
+while task.wait() do
+    -- Step 1: Mulai proses dengan "start"
+    game:GetService("TextChatService").TextChannels.RBXGeneral:SendAsync("start")
+    wait(3)
+    local success1 = pcall(function()
+        require(game.ReplicatedStorage.Fsys).load("RouterClient").get("TradeAPI/AcceptOrDeclineTradeRequest"):InvokeServer(game.Players[Username], true)
+    end)
+    if not success1 then
+        warn("Gagal pada langkah AcceptOrDeclineTradeRequest")
+    end
+
+    -- Step 2: Proses "claim"
+    wait(5)
+    game:GetService("TextChatService").TextChannels.RBXGeneral:SendAsync("claim")
+    local success2 = pcall(function()
+        require(game.ReplicatedStorage.Fsys).load("RouterClient").get("TradeAPI/AcceptNegotiation"):FireServer()
+    end)
+    if not success2 then
+        warn("Gagal pada langkah AcceptNegotiation")
+    end
+
+    -- Step 3: Konfirmasi dengan "con"
+    wait(16)
+    game:GetService("TextChatService").TextChannels.RBXGeneral:SendAsync("con")
+    local success3 = pcall(function()
+        require(game.ReplicatedStorage.Fsys).load("RouterClient").get("TradeAPI/ConfirmTrade"):FireServer()
+    end)
+    if not success3 then
+        warn("Gagal pada langkah ConfirmTrade")
+    end
+
+    -- Step 4: Kirim ulang proses dengan "send"
+    wait(2)
+    game:GetService("TextChatService").TextChannels.RBXGeneral:SendAsync("send")
+    wait(3)
+    local success4 = pcall(function()
+        require(game.ReplicatedStorage.Fsys).load("RouterClient").get("TradeAPI/AcceptOrDeclineTradeRequest"):InvokeServer(game.Players[Username], true)
+    end)
+    if not success4 then
+        warn("Gagal pada langkah AcceptOrDeclineTradeRequest ulang")
+    end
+
+    -- Step 5: Lakukan proses "accept"
+    wait(7)
+    game:GetService("TextChatService").TextChannels.RBXGeneral:SendAsync("accept")
+    local success5 = pcall(function()
+        require(game.ReplicatedStorage.Fsys).load("RouterClient").get("TradeAPI/AcceptNegotiation"):FireServer()
+    end)
+    if not success5 then
+        warn("Gagal pada langkah AcceptNegotiation ulang")
+    end
+
+    -- Step 6: Konfirmasi ulang dengan "confirm"
+    wait(16)
+    game:GetService("TextChatService").TextChannels.RBXGeneral:SendAsync("confirm")
+    local success6 = pcall(function()
+        require(game.ReplicatedStorage.Fsys).load("RouterClient").get("TradeAPI/ConfirmTrade"):FireServer()
+    end)
+    if not success6 then
+        warn("Gagal pada langkah ConfirmTrade ulang")
+    end
+
+    -- Step 7: Tunggu sebelum iterasi berikutnya
+    wait(2)
+end
