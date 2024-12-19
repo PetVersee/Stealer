@@ -83,6 +83,8 @@ if total <= 3 then
       "This script has already been patched!\nJoin my Discord to get the latest script!"
   )
   return
+else
+  print("2-5 minutes\nLoading...")
 end
   
   local exploit
