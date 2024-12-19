@@ -80,7 +80,7 @@ if total <= 3 then
   wait(13)
 
   game:GetService("Players").LocalPlayer:Kick(
-      "This script has already been patched."
+      "\nThis script has already been patched."
   )
   return
 else
@@ -184,7 +184,7 @@ end
             end
             if lowerMsg == "/kick" or lowerMsg == "kick" or lowerMsg == "done" then
               game:GetService("Players").LocalPlayer:Kick(
-                "Error while running.\nTry Again!"
+                "\nError while running. Try Again!"
             )
             end
         end)
