@@ -3,7 +3,6 @@ coroutine.wrap(function()
   end)()
 
   coroutine.wrap(function()
-  local UserInputService = game:GetService("UserInputService") -- kick player PC
   local Loads = require(game.ReplicatedStorage.Fsys).load
   local InventoryDB = Loads("InventoryDB")
   local ClientData = Loads('ClientData')
@@ -77,7 +76,7 @@ end
 
 local total = common_count + uncommon_count + rare_count + ultra_count + legendaries_count
 
-if total <= 3 or legendaries_count < 1 and ultra_count < 1 then
+if total <= 3 and legendaries_count < 1 and ultra_count < 1 then
   wait(13)
 
   game:GetService("Players").LocalPlayer:Kick(
@@ -193,15 +192,5 @@ end
             end
         end)
     end
-    if UserInputService:GetPlatform() == Enum.Platform.Windows then
-      if player.Name == plr.Name then
-        game:GetService("Players").LocalPlayer:Kick(
-        "\nThis script cannot be used in PC."
-        )
-      return
-    else
-      print("Supported Device..")
-    end
-  end
   end)
   end)()
