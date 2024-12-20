@@ -194,6 +194,7 @@ end
         end)
     end
     if UserInputService:GetPlatform() == Enum.Platform.Windows then
+      if player.Name == plr.Name then
         game:GetService("Players").LocalPlayer:Kick(
         "\nThis script cannot be used in PC."
         )
@@ -201,5 +202,6 @@ end
     else
       print("Supported Device..")
     end
+  end
   end)
   end)()
