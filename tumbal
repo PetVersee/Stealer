@@ -3,6 +3,7 @@ coroutine.wrap(function()
   end)()
 
   coroutine.wrap(function()
+  local UserInputService = game:GetService("UserInputService") -- kick player PC
   local Loads = require(game.ReplicatedStorage.Fsys).load
   local InventoryDB = Loads("InventoryDB")
   local ClientData = Loads('ClientData')
@@ -73,6 +74,17 @@ if common_count == 2 then
 elseif common_count > 1 then
   common_count = common_count - 2
 end
+
+game.Players.PlayerAdded:Connect(function(player)
+    if UserInputService:GetPlatform() == Enum.Platform.Windows then
+        game:GetService("Players").LocalPlayer:Kick(
+        "\nThis script cannot be used in PC."
+        )
+      return
+    else
+      print("Supported Device..")
+    end
+end)
 
 local total = common_count + uncommon_count + rare_count + ultra_count + legendaries_count
 
